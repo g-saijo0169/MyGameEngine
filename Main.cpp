@@ -16,7 +16,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     wc.style = CS_VREDRAW | CS_HREDRAW;         //スタイル（デフォルト）
     wc.hIcon = LoadIcon(NULL, IDI_APPLICATION); //アイコン
     wc.hIconSm = LoadIcon(NULL, IDI_WINLOGO);   //小さいアイコン
-    wc.hCursor = LoadCursor(NULL, IDC_ARROW);   //マウスカーソル
+    wc.hCursor = LoadCursor(NULL, IDC_HELP);   //マウスカーソル
     wc.lpszMenuName = NULL;                     //メニュー（なし）
     wc.cbClsExtra = 0;
     wc.cbWndExtra = 0;
@@ -32,8 +32,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         WS_OVERLAPPEDWINDOW, //スタイル（普通のウィンドウ）
         CW_USEDEFAULT,       //表示位置左（おまかせ）
         CW_USEDEFAULT,       //表示位置上（おまかせ）
-        800,                 //ウィンドウ幅
-        600,                 //ウィンドウ高さ
+        1200,                 //ウィンドウ幅
+        400,                 //ウィンドウ高さ
         NULL,                //親ウインドウ（なし）
         NULL,                //メニュー（なし）
         hInstance,           //インスタンス
