@@ -29,11 +29,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     HWND hWnd = CreateWindow(
         "SampleGame",         //ウィンドウクラス名
         "サンプルゲーム",     //タイトルバーに表示する内容
-        WS_OVERLAPPEDWINDOW, //スタイル（普通のウィンドウ）
+        WS_OVERLAPPEDWINDOW | WS_VISIBLE, //スタイル（普通のウィンドウ）
         CW_USEDEFAULT,       //表示位置左（おまかせ）
         CW_USEDEFAULT,       //表示位置上（おまかせ）
-        1200,                 //ウィンドウ幅
-        400,                 //ウィンドウ高さ
+        320,                 //ウィンドウ幅
+        240,                 //ウィンドウ高さ
         NULL,                //親ウインドウ（なし）
         NULL,                //メニュー（なし）
         hInstance,           //インスタンス
@@ -41,7 +41,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     );
 
     //ウィンドウを表示
-    ShowWindow(hWnd, nCmdShow);
+  //  ShowWindow(hWnd, nCmdShow);
 
     //メッセージループ（何か起きるのを待つ）
     MSG msg;
@@ -70,6 +70,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 //ウィンドウプロシージャ（何かあった時によばれる関数）
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+  
     switch (msg)
     {
     case WM_DESTROY:
