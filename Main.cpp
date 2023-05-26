@@ -11,7 +11,6 @@ const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
 //プロトタイプ宣言
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-
 //エントリーポイント
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -81,21 +80,14 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
             Direct3D::BeginDraw();
 
-          
-
-
             //描画処理
 
             Direct3D::EndDraw();
 
-
-         
         }
     }
 
     Direct3D::Release();
-
-  
 
 	return 0;
 }

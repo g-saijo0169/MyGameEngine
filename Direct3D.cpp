@@ -1,3 +1,4 @@
+#include <d3dcompiler.h>
 #include "Direct3D.h"
 
 //変数
@@ -13,7 +14,11 @@ namespace Direct3D
 
 	ID3D11RenderTargetView* pRenderTargetView = nullptr;	//レンダーターゲットビュー
 
+    ID3D11VertexShader* pVertexShader = nullptr;	//頂点シェーダー
 
+    ID3D11PixelShader* pPixelShader = nullptr;		//ピクセルシェーダー
+
+    ID3D11InputLayout* pVertexLayout = nullptr;	//頂点インプットレイアウト
 }
 
 
@@ -58,7 +63,7 @@ void Direct3D::Initialize(int winW, int winH, HWND hWnd)
         nullptr,				// どのビデオアダプタを使用するか？既定ならばnullptrで
         D3D_DRIVER_TYPE_HARDWARE,		// ドライバのタイプを渡す。ふつうはHARDWARE
         nullptr,				// 上記をD3D_DRIVER_TYPE_SOFTWAREに設定しないかぎりnullptr
-        0,					// 何らかのフラグを指定する。（デバッグ時はD3D11_CREATE_DEVICE_DEBUG？）
+        0,					// 何らかのフラグを指定する。（デバッグ時はD3D11_sCREATE_DEVICE_DEBUG？）
         nullptr,				// デバイス、コンテキストのレベルを設定。nullptrにしとけばOK
         0,					// 上の引数でレベルを何個指定したか
         D3D11_SDK_VERSION,			// SDKのバージョン。必ずこの値
@@ -93,8 +98,51 @@ void Direct3D::Initialize(int winW, int winH, HWND hWnd)
     pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);  // データの入力種類を指定
     pContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);            // 描画先を設定
     pContext->RSSetViewports(1, &vp);
+
+    //シェーダー準備
+
+    InitShader();
 }
 
+
+//シェーダー準備
+
+void Direct3D::InitShader()
+
+{
+    // 頂点シェーダの作成（コンパイル）
+
+    ID3DBlob* pCompileVS = nullptr;
+
+    D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+
+    pDevice->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &pVertexShader);
+
+   
+    //頂点インプットレイアウト
+
+    D3D11_INPUT_ELEMENT_DESC layout[] = {
+
+        { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },	//位置
+
+    };
+
+    pDevice->CreateInputLayout(layout, 1, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout);
+
+    pCompileVS->Release();
+
+
+    // ピクセルシェーダの作成（コンパイル）
+
+    ID3DBlob* pCompilePS = nullptr;
+
+    D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+
+    pDevice->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &pPixelShader);
+
+    pCompilePS->Release();
+
+}
 
 
 //描画開始
