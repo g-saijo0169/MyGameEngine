@@ -94,7 +94,7 @@ void Quad::Draw()
 	Direct3D::pContext->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//頂点シェーダー用	
 	Direct3D::pContext->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
 
-	Direct3D::pContext->DrawIndexed(9, 0, 0);
+	Direct3D::pContext->DrawIndexed(6, 0, 0);
 }
 
 void Quad::Release()
