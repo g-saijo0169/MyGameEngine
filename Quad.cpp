@@ -102,7 +102,11 @@ void Quad::Draw()
 
 void Quad::Release()
 {
-	pVertexBuffer_->Release();
-	pIndexBuffer_->Release();
-	pConstantBuffer_->Release();
+	/*SAFE_RELEASE(pVertexBuffer_);
+	SAFE_RELEASE(pIndexBuffer_);
+	SAFE_RELEASE(pConstantBuffer_);*/
+
+	//pVertexBuffer_->Release();
+	//pIndexBuffer_->Release();
+	//pConstantBuffer_->Release();
 }

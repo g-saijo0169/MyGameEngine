@@ -7,19 +7,13 @@ namespace Direct3D
 
 {
 	ID3D11Device* pDevice = nullptr;		//デバイス
-
 	ID3D11DeviceContext* pContext = nullptr;		//デバイスコンテキスト
-
 	IDXGISwapChain* pSwapChain = nullptr;		//スワップチェイン
-
 	ID3D11RenderTargetView* pRenderTargetView = nullptr;	//レンダーターゲットビュー
 
     ID3D11VertexShader* pVertexShader = nullptr;	//頂点シェーダー
-
     ID3D11PixelShader* pPixelShader = nullptr;		//ピクセルシェーダー
-
     ID3D11InputLayout* pVertexLayout = nullptr;	//頂点インプットレイアウト
-
     ID3D11RasterizerState* pRasterizerState = nullptr;	//ラスタライザー
 }
 
@@ -80,8 +74,15 @@ void Direct3D::Initialize(int winW, int winH, HWND hWnd)
     ID3D11Texture2D* pBackBuffer;
     pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
 
+
+    
     //レンダーターゲットビューを作成
-    pDevice->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView);
+    HRESULT hr;
+    hr = pDevice->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView);
+    if (hr == E_FAIL)
+    {
+        //失敗したときの処理
+    }
 
     //一時的にバックバッファを取得しただけなので解放
     pBackBuffer->Release();
@@ -116,6 +117,7 @@ void Direct3D::InitShader()
 
     ID3DBlob* pCompileVS = nullptr;
     D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+    assert(pCompileVS != nullptr);
     pDevice->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &pVertexShader);
 
    
@@ -127,15 +129,18 @@ void Direct3D::InitShader()
 
     };
     pDevice->CreateInputLayout(layout, 1, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout);
-    pCompileVS->Release();
 
+    SAFE_RELEASE(pCompileVS);
 
     // ピクセルシェーダの作成（コンパイル）
 
     ID3DBlob* pCompilePS = nullptr;
     D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+    assert(pCompilePS != nullptr);
     pDevice->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &pPixelShader);
-    pCompilePS->Release();
+
+    SAFE_RELEASE(pCompileVS);
+    //pCompilePS->Release();
 
     //ラスタライザ作成
     D3D11_RASTERIZER_DESC rdc = {};
