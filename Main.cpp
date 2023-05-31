@@ -91,6 +91,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         }
     }
 
+    
     Direct3D::Release();
     pQuad->Release();
 
