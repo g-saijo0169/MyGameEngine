@@ -19,9 +19,12 @@ class Quad
 	ID3D11Buffer* pConstantBuffer_;	//コンスタントバッファ
 
 public:
+	/// <summary>
+	/// 四角形を表すクラスのコンス
+	/// </summary>
 	Quad();
 	~Quad();
-	void Initialize();
+	HRESULT Initialize();
 	void Draw();
 	void Release();
 };

@@ -17,6 +17,7 @@ Quad* pQuad = new Quad;
 //エントリーポイント
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 {
+    
 	//ウィンドウクラス（設計図）を作成
     WNDCLASSEX wc;
     wc.cbSize = sizeof(WNDCLASSEX);             //この構造体のサイズ
@@ -59,10 +60,24 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     //ウィンドウを表示
     ShowWindow(hWnd, nCmdShow);
 
+    HRESULT hr;//こっからしたはhr使える
+
     //Direct3D初期化
 
-    Direct3D::Initialize(winW, winH, hWnd);
-    pQuad->Initialize();
+    hr = Direct3D::Initialize(winW, winH, hWnd);
+    if (FAILED(hr))
+    {
+        MessageBox(nullptr, "Direct3Dの初期化に失敗しました", "エラー", MB_OK);
+        PostQuitMessage(0);  //プログラム終了
+    }
+    pQuad = new Quad;
+
+    hr = pQuad->Initialize();
+    if (FAILED(hr))
+    {
+        MessageBox(nullptr, "Quadの初期化に失敗しました", "エラー", MB_OK);
+        PostQuitMessage(0);  //プログラム終了
+    }
 
     //メッセージループ（何か起きるのを待つ）
     MSG msg;
