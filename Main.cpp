@@ -111,7 +111,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     pQuad->Release();
     SAFE_DELETE(pQuad);
 
-	return 0;
+	return S_OK;
 }
 
 //ウィンドウプロシージャ（何かあった時によばれる関数）
