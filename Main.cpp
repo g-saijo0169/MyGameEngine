@@ -112,7 +112,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //XMMATRIX matS = XMMatrixScaling(1.0f, 1.0f, 1.0f);
             XMMATRIX mat =  matR * matT ;
             
-
             pQuad->Draw(mat);
 
             Direct3D::EndDraw();
