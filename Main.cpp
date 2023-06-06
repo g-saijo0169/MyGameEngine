@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include "Direct3D.h"
 #include "Quad.h"
+#include "Camera.h"
 
 
 //定数宣言
@@ -79,6 +80,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         PostQuitMessage(0);  //プログラム終了
     }
 
+    Camera::Initialize();
+
     //メッセージループ（何か起きるのを待つ）
     MSG msg;
     ZeroMemory(&msg, sizeof(msg));
@@ -97,6 +100,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //ゲームの処理
 
             Direct3D::BeginDraw();
+            Camera::Update();
             pQuad->Draw();
 
             //描画処理
