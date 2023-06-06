@@ -97,13 +97,23 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         //メッセージなし
         else
         {
+            Camera::Update();
             //ゲームの処理
 
             Direct3D::BeginDraw();
-            Camera::Update();
-            pQuad->Draw();
+           
 
             //描画処理
+            static int a = 0;
+            a += 1;
+
+            XMMATRIX matR = XMMatrixRotationZ(XMConvertToRadians(a));
+            XMMATRIX matT = XMMatrixTranslation(0, 0, 0);
+            //XMMATRIX matS = XMMatrixScaling(1.0f, 1.0f, 1.0f);
+            XMMATRIX mat =  matR * matT ;
+            
+
+            pQuad->Draw(mat);
 
             Direct3D::EndDraw();
 
