@@ -15,7 +15,7 @@ Quad::~Quad()
 
 HRESULT Quad::Initialize()
 {
-	HRESULT hr;
+	HRESULT hr = S_OK;
 	// ’¸“_î•ñ
 	VERTEX vertices[] =
 	{
@@ -133,7 +133,7 @@ void Quad::Draw(XMMATRIX& worldMatrix)
 
 void Quad::Release()
 {
-	pTexture_->Release();
+	SAFE_RELEASE(pTexture_);
 	SAFE_DELETE(pTexture_);
 
 	/*SAFE_RELEASE(pVertexBuffer_);
