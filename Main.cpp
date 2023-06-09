@@ -1,7 +1,7 @@
 //インクルード
 #include <Windows.h>
 #include "Direct3D.h"
-#include "Quad.h"
+#include "Dice.h"
 #include "Camera.h"
 
 
@@ -13,7 +13,7 @@ const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
 //プロトタイプ宣言
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-Quad* pQuad = new Quad;
+Dice* pDice = new Dice;
 
 //エントリーポイント
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
@@ -71,12 +71,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         MessageBox(nullptr, "Direct3Dの初期化に失敗しました", "エラー", MB_OK);
         PostQuitMessage(0);  //プログラム終了
     }
-    pQuad = new Quad;
+    pDice = new Dice;
 
-    hr = pQuad->Initialize();
+    hr = pDice->Initialize();
     if (FAILED(hr))
     {
-        MessageBox(nullptr, "Quadの初期化に失敗しました", "エラー", MB_OK);
+        MessageBox(nullptr, "Diceの初期化に失敗しました", "エラー", MB_OK);
         PostQuitMessage(0);  //プログラム終了
     }
 
@@ -105,14 +105,14 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
             //描画処理
             static float a = 0;
-            //a += 0.1;
+            a += 0.1;
 
-            XMMATRIX matR = XMMatrixRotationZ(XMConvertToRadians(a));
+            XMMATRIX matR = XMMatrixRotationY(XMConvertToRadians(a));
             XMMATRIX matT = XMMatrixTranslation(0, 0, 0);
             //XMMATRIX matS = XMMatrixScaling(1.0f, 1.0f, 1.0f);
             XMMATRIX mat =  matR * matT ;
             
-            pQuad->Draw(mat);
+            pDice->Draw(mat);
 
             Direct3D::EndDraw();
 
@@ -121,8 +121,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     
     
     Direct3D::Release();
-    pQuad->Release();
-    SAFE_DELETE(pQuad);
+    pDice->Release();
+    SAFE_DELETE(pDice);
 
 	return S_OK;
 }
