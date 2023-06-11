@@ -25,8 +25,8 @@ HRESULT Dice::Initialize()
 		{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f) },// 手前の左下:3
 		{ XMVectorSet(-1.0f,  1.0f, 1.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },// 奥の左上:4
 		{ XMVectorSet(1.0f,  1.0f, 1.0f, 0.0f),	XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },// 奥の右上:5
-		{ XMVectorSet(1.0f, -1.0f, 1.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },// 奥の右下:6
-		{ XMVectorSet(-1.0f, -1.0f, 1.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },// 奥の左下:7
+		{ XMVectorSet(1.0f, -1.0f, 1.0f, 0.0f),	XMVectorSet(0.0f, 0.25f, 0.0f, 0.0f) },// 奥の右下:6
+		{ XMVectorSet(-1.0f, -1.0f, 1.0f, 0.0f),XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },// 奥の左下:7
 
 	};
 
