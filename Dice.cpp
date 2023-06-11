@@ -20,9 +20,9 @@ HRESULT Dice::Initialize()
 	VERTEX vertices[] =
 	{
 		{ XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f)},// 手前の左上:0
-		{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },// 手前の右上:1
-		{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },// 手前の右下:2
-		{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },// 手前の左下:3
+		{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(0.3f, 0.0f, 0.0f, 0.0f) },// 手前の右上:1
+		{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(0.3f, 0.5f, 0.0f, 0.0f) },// 手前の右下:2
+		{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f) },// 手前の左下:3
 		{ XMVectorSet(-1.0f,  1.0f, 1.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },// 奥の左上:4
 		{ XMVectorSet(1.0f,  1.0f, 1.0f, 0.0f),	XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },// 奥の右上:5
 		{ XMVectorSet(1.0f, -1.0f, 1.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },// 奥の右下:6
@@ -51,7 +51,7 @@ HRESULT Dice::Initialize()
 
 
 	//インデックス情報
-	int index[] = { 0,2,3, 0,1,2, 1,6,2, 1,5,6, 5,7,6, 5,4,7,4,3,7, 4,0,3, 4,1,0, 4,5,1, 7,2,3, 7,6,2 };
+	int index[] = { 0,2,3, 0,1,2, 1,6,2, 1,5,6, 5,7,6, 5,4,7,4,3,7, 4,0,3, 4,1,0, 4,5,1, 3,2,7, 2,6,7 };
 
 	// インデックスバッファを生成する
 	D3D11_BUFFER_DESC   bd;
@@ -132,7 +132,7 @@ void Dice::Draw(XMMATRIX& worldMatrix)
 	Direct3D::pContext_->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//頂点シェーダー用	
 	Direct3D::pContext_->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
 
-	Direct3D::pContext_->DrawIndexed(24, 0, 0);
+	Direct3D::pContext_->DrawIndexed(36, 0, 0);
 }
 
 void Dice::Release()
