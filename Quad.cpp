@@ -1,19 +1,19 @@
-//#include "Dice.h"
+//#include "Quad.h"
 //#include "Camera.h"
 //
-//Dice::Dice():
+//Quad::Quad():
 //	pVertexBuffer_(nullptr), pIndexBuffer_(nullptr), pConstantBuffer_(nullptr),pTexture_(nullptr)
 //{
 //}
 //
-//Dice::~Dice()
+//Quad::~Quad()
 //{
 //	SAFE_RELEASE(pConstantBuffer_);
 //	SAFE_RELEASE(pIndexBuffer_);
 //	SAFE_RELEASE(pVertexBuffer_);
 //}
 //
-//HRESULT Dice::Initialize()
+//HRESULT Quad::Initialize()
 //{
 //	HRESULT hr = S_OK;
 //	// 頂点情報
@@ -91,13 +91,13 @@
 //	}
 //
 //	pTexture_ = new Texture;
-//	pTexture_->Load("Assets\\Dice.png");
+//	pTexture_->Load("Assets\\Quad.png");
 //
 //	return S_OK;
 //
 //}
 //
-//void Dice::Draw(XMMATRIX& worldMatrix)
+//void Quad::Draw(XMMATRIX& worldMatrix)
 //{
 //	//コンスタントバッファに渡す情報
 //	CONSTANT_BUFFER cb;
@@ -131,7 +131,7 @@
 //	Direct3D::pContext_->DrawIndexed(6, 0, 0);
 //}
 //
-//void Dice::Release()
+//void Quad::Release()
 //{
 //	SAFE_RELEASE(pTexture_);
 //	SAFE_DELETE(pTexture_);

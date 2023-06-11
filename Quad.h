@@ -19,7 +19,7 @@
 //	XMVECTOR uv;
 //};
 //
-//class Dice
+//class Quad
 //{
 //	ID3D11Buffer* pVertexBuffer_;	//頂点バッファ
 //	ID3D11Buffer* pIndexBuffer_;
@@ -31,8 +31,8 @@
 //	/// <summary>
 //	/// 四角形を表すクラスのコンス
 //	/// </summary>
-//	Dice();
-//	~Dice();
+//	Quad();
+//	~Quad();
 //	HRESULT Initialize();
 //	void Draw(XMMATRIX& worldMatrix);
 //	void Release();
