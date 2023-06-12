@@ -20,13 +20,13 @@ HRESULT Dice::Initialize()
 	VERTEX vertices[] =
 	{
 		{ XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f)},// 手前の左上:0
-		{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f) },// 手前の右上:1
-		{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f) },// 手前の右下:2
+		{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(0.5f, 0.0f, 0.0f, 0.0f) },// 手前の右上:1
+		{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f) },// 手前の右下:2
 		{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f) },// 手前の左下:3
-		{ XMVectorSet(-1.0f,  1.0f, 1.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },// 奥の左上:4
-		{ XMVectorSet(1.0f,  1.0f, 1.0f, 0.0f),	XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },// 奥の右上:5
-		{ XMVectorSet(1.0f, -1.0f, 1.0f, 0.0f),	XMVectorSet(0.0f, 0.25f, 0.0f, 0.0f) },// 奥の右下:6
-		{ XMVectorSet(-1.0f, -1.0f, 1.0f, 0.0f),XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },// 奥の左下:7
+		{ XMVectorSet(-1.0f,  1.0f, 2.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },// 奥の左上:4
+		{ XMVectorSet(1.0f,  1.0f, 2.0f, 0.0f),	XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f) },// 奥の右上:5
+		{ XMVectorSet(1.0f, -1.0f, 2.0f, 0.0f),	XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f) },// 奥の右下:6
+		{ XMVectorSet(-1.0f, -1.0f, 2.0f, 0.0f),XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f) },// 奥の左下:7
 
 	};
 
