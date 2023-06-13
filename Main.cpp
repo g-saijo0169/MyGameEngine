@@ -1,7 +1,7 @@
 //インクルード
 #include <Windows.h>
 #include "Direct3D.h"
-#include "Dice.h"
+//#include "Dice.h"
 #include "Camera.h"
 #include "Quad.h"
 
@@ -111,12 +111,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             static float b = 0;
             a += 0.01;
             b += 0.02;
-            XMMATRIX matRX = XMMatrixRotationX(XMConvertToRadians(b));
-            XMMATRIX matRY = XMMatrixRotationY(XMConvertToRadians(a));
-           // XMMATRIX matRZ = XMMatrixRotationZ(XMConvertToRadians(a));
-            //XMMATRIX matT = XMMatrixTranslation(0, 0, 0);
+            //XMMATRIX matRX = XMMatrixRotationX(XMConvertToRadians(b));
+            //XMMATRIX matRY = XMMatrixRotationY(XMConvertToRadians(a));
+            // XMMATRIX matRZ = XMMatrixRotationZ(XMConvertToRadians(a));
+            XMMATRIX matT = XMMatrixTranslation(0, 0, 0);
             //XMMATRIX matS = XMMatrixScaling(1.0f, 1.0f, 1.0f);
-            XMMATRIX mat = matRX * matRY ;
+            XMMATRIX mat = matT;
             
             pQuad->Draw(mat);
             //pDice->Draw(mat);
