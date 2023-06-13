@@ -25,7 +25,7 @@ HRESULT Dice::Initialize()
 		{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f) },// 右下:2
 		{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f) },// 左下:3
 
-		//右面
+		//右
 		{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f)},// 左上:4
 		{ XMVectorSet(1.0f,  1.0f, 2.0f, 0.0f),	XMVectorSet(0.5f, 0.0f, 0.0f, 0.0f) },// 右上:5
 		{ XMVectorSet(1.0f, -1.0f, 2.0f, 0.0f),	XMVectorSet(0.5f, 0.5f, 0.0f, 0.0f) },// 右下:6
@@ -37,7 +37,7 @@ HRESULT Dice::Initialize()
 		{ XMVectorSet(1.0f, -1.0f, 2.0f, 0.0f),	XMVectorSet(0.5f, 1.0f, 0.0f, 0.0f) },// 右下:10
 		{ XMVectorSet(-1.0f, -1.0f, 2.0f, 0.0f),XMVectorSet(0.25f, 1.0f, 0.0f, 0.0f) },//　左下11
 
-		//左面
+		//左
 		{ XMVectorSet(-1.0f,  1.0f, 2.0f, 0.0f),XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f) },// 左上:12
 		{ XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f) },// 右上:13
 		{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(0.25f, 1.0f, 0.0f, 0.0f) },// 右下:14

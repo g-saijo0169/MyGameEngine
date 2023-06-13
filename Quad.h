@@ -3,6 +3,7 @@
 #include <DirectXMath.h>
 #include "Direct3D.h"
 #include "Texture.h"
+#include "Dice.h"
 
 using namespace DirectX;
 
