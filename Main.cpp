@@ -1,8 +1,9 @@
 //インクルード
 #include <Windows.h>
 #include "Direct3D.h"
-#include "Dice.h"
+//#include "Dice.h"
 #include "Camera.h"
+#include "Quad.h"
 
 
 //定数宣言
@@ -12,8 +13,8 @@ const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
 
 //プロトタイプ宣言
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
-Dice* pDice = new Dice;
+Quad* pQuad = new Quad;
+//Dice* pDice = new Dice;
 
 //エントリーポイント
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
@@ -71,9 +72,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         MessageBox(nullptr, "Direct3Dの初期化に失敗しました", "エラー", MB_OK);
         PostQuitMessage(0);  //プログラム終了
     }
-    pDice = new Dice;
+    pQuad = new Quad;
+   // pDice = new Dice;
 
-    hr = pDice->Initialize();
+    hr = pQuad->Initialize();
+    //hr = pDice->Initialize();
     if (FAILED(hr))
     {
         MessageBox(nullptr, "Diceの初期化に失敗しました", "エラー", MB_OK);
@@ -115,7 +118,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //XMMATRIX matS = XMMatrixScaling(1.0f, 1.0f, 1.0f);
             XMMATRIX mat = matRX * matRY ;
             
-            pDice->Draw(mat);
+            pQuad->Draw(mat);
+            //pDice->Draw(mat);
 
             Direct3D::EndDraw();
 
@@ -124,8 +128,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     
     
     Direct3D::Release();
-    pDice->Release();
-    SAFE_DELETE(pDice);
+    pQuad->Release();
+    //pDice->Release();
+    SAFE_DELETE(pQuad);
+    //SAFE_DELETE(pDice);
 
 	return S_OK;
 }
