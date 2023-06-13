@@ -55,25 +55,6 @@ HRESULT Dice::Initialize()
 		{ XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 0.5f, 0.0f, 0.0f) },// 右下:22
 		{ XMVectorSet(-1.0f, 1.0f, 0.0f, 0.0f),XMVectorSet(0.75f, 0.5f, 0.0f, 0.0f) },// 左下:23
 
-		//{ XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f)},// 手前の左上:0
-		//{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f) },// 手前の右上:1
-		//{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f) },// 手前の右下:2
-		//{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.5f, 0.0f, 0.0f) },// 手前の左下:3
-
-		//{ XMVectorSet(-1.0f,  1.0f, 2.0f, 0.0f),XMVectorSet(0.25f, 0.5f, 0.5f, 0.0f) },// 奥の左上:4
-		//{ XMVectorSet(1.0f,  1.0f, 2.0f, 0.0f),	XMVectorSet(0.5f, 0.5f, 0.5f, 0.0f) },// 奥の右上:5
-		//{ XMVectorSet(1.0f, -1.0f, 2.0f, 0.0f),	XMVectorSet(0.5f, 1.0f, 0.75f, 0.0f) },// 奥の右下:6
-		//{ XMVectorSet(-1.0f, -1.0f, 2.0f, 0.0f),XMVectorSet(0.25f, 1.0f, 0.75f, 0.0f) },// 奥の左下:7
-
-		//{ XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f)},// 手前の左上:0
-		//{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(0.75f, 1.0f, 0.0f, 0.0f) },// 手前の右上:1
-		//{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(0.5f, 1.0f, 0.0f, 0.0f) },// 手前の右下:2
-		//{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.25f, 1.0f, 0.0f, 0.0f) },// 手前の左下:3
-		//{ XMVectorSet(-1.0f,  1.0f, 2.0f, 0.0f),XMVectorSet(1.0f, 0.55f, 0.0f, 0.0f) },// 奥の左上:4
-		//{ XMVectorSet(1.0f,  1.0f, 2.0f, 0.0f),	XMVectorSet(0.75f, 0.55f, 0.0f, 0.0f) },// 奥の右上:5
-		//{ XMVectorSet(1.0f, -1.0f, 2.0f, 0.0f),	XMVectorSet(0.5f, 0.55f, 0.0f, 0.0f) },// 奥の右下:6
-		//{ XMVectorSet(-1.0f, -1.0f, 2.0f, 0.0f),XMVectorSet(0.25f, 0.55f, 0.0f, 0.0f) },// 奥の左下:7
-
 	};
 
 	// 頂点データ用バッファの設定
@@ -102,9 +83,8 @@ HRESULT Dice::Initialize()
 		            8,10,9, 8,11,10,
 		           12,14,15, 12,13,14,
 		           16,17,18, 16,18,19,
-		           20,21,22, 20,22,23};
+		           20,21,22, 20,22,23 };
 
-	//int index[] = { 0,2,3, 0,1,2, 1,6,2, 1,5,6, 5,7,6, 5,4,7, 4,3,7, 4,0,3, 4,1,0, 4,5,1, 3,2,7, 2,6,7 };
 
 	// インデックスバッファを生成する
 	D3D11_BUFFER_DESC   bd;
