@@ -1,9 +1,9 @@
 //インクルード
 #include <Windows.h>
 #include "Direct3D.h"
-//#include "Dice.h"
+#include "Dice.h"
 #include "Camera.h"
-#include "Quad.h"
+//#include "Quad.h"
 
 
 //定数宣言
@@ -13,8 +13,8 @@ const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
 
 //プロトタイプ宣言
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-Quad* pQuad = new Quad;
-//Dice* pDice = new Dice;
+//Quad* pQuad = new Quad;
+Dice* pDice = new Dice;
 
 //エントリーポイント
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
@@ -72,11 +72,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
         MessageBox(nullptr, "Direct3Dの初期化に失敗しました", "エラー", MB_OK);
         PostQuitMessage(0);  //プログラム終了
     }
-    pQuad = new Quad;
-   // pDice = new Dice;
+    //pQuad = new Quad;
+    pDice = new Dice;
 
-    hr = pQuad->Initialize();
-    //hr = pDice->Initialize();
+    //hr = pQuad->Initialize();
+    hr = pDice->Initialize();
     if (FAILED(hr))
     {
         MessageBox(nullptr, "Diceの初期化に失敗しました", "エラー", MB_OK);
@@ -109,17 +109,19 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
             //描画処理
             static float a = 0;
             static float b = 0;
-            a += 0.01;
+            a += 0.05;
             b += 0.02;
-            //XMMATRIX matRX = XMMatrixRotationX(XMConvertToRadians(b));
-            //XMMATRIX matRY = XMMatrixRotationY(XMConvertToRadians(a));
+            XMMATRIX matRX = XMMatrixRotationX(XMConvertToRadians(b));
+            XMMATRIX matRY = XMMatrixRotationY(XMConvertToRadians(a));
             // XMMATRIX matRZ = XMMatrixRotationZ(XMConvertToRadians(a));
             XMMATRIX matT = XMMatrixTranslation(0, 0, 0);
             //XMMATRIX matS = XMMatrixScaling(1.0f, 1.0f, 1.0f);
-            XMMATRIX mat = matT;
+            XMMATRIX mat = matT  * matRY * matRX;
             
-            pQuad->Draw(mat);
-            //pDice->Draw(mat);
+
+
+            //pQuad->Draw(mat);
+            pDice->Draw(mat);
 
             Direct3D::EndDraw();
 
@@ -128,10 +130,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     
     
     Direct3D::Release();
-    pQuad->Release();
-    //pDice->Release();
-    SAFE_DELETE(pQuad);
-    //SAFE_DELETE(pDice);
+    //pQuad->Release();
+    pDice->Release();
+    //SAFE_DELETE(pQuad);
+    SAFE_DELETE(pDice);
 
 	return S_OK;
 }
