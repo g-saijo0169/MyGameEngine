@@ -102,7 +102,6 @@ void Sprite::Draw(XMMATRIX& worldMatrix)
 {
 	//コンスタントバッファに渡す情報
 	CONSTANT_BUFFER cb;
-	//cb.matWVP = XMMatrixTranspose(worldMatrix * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());//頂点情報にviewとprojを一緒に与えている。
 	cb.matW = XMMatrixTranspose(worldMatrix);
 	D3D11_MAPPED_SUBRESOURCE pdata;
 	Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める

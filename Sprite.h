@@ -51,6 +51,7 @@ private:
 	HRESULT CreateConstanBuffer();
 	HRESULT LoadTexture();
 
+
 	void PassDataToCB(DirectX::XMMATRIX& worldMatrix);
 	void SetBufferToPipeline();
 };
