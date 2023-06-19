@@ -105,7 +105,7 @@ HRESULT Sprite::CreateVertexBuffer()
 void Sprite::InitIndexData()
 {
 	//インデックス情報
-	int index_[] = { 0,2,3, 0,1,2 };
+	index_ = { 0,2,3, 0,1,2 };
 }
 
 HRESULT Sprite::CreateIndexBuffer()
@@ -119,7 +119,7 @@ HRESULT Sprite::CreateIndexBuffer()
 	bd.MiscFlags = 0;
 
 	D3D11_SUBRESOURCE_DATA InitData;
-	InitData.pSysMem = ;
+	InitData.pSysMem = index_.data();
 	InitData.SysMemPitch = 0;
 	InitData.SysMemSlicePitch = 0;
 
