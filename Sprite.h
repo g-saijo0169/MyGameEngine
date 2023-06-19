@@ -23,17 +23,17 @@ class Sprite
 
  };
 protected:
-	UINT64 vertexNum_;
-	std::vector<VERTEX> vertices_;
+	UINT64 vertexNum_;              //頂点数
+	std::vector<VERTEX> vertices_;  //頂点情報
 	ID3D11Buffer* pVertexBuffer_;	//頂点バッファ
 
-	UINT64 indexNum;
-	std::vector<int> index_;
+	UINT64 indexNum;                //インデックス数
+	std::vector<int> index_;        //インデックス情報
 
-	ID3D11Buffer* pIndexBuffer_;
+	ID3D11Buffer* pIndexBuffer_;    //インデックスバッファ
 	ID3D11Buffer* pConstantBuffer_;	//コンスタントバッファ
 
-	Texture* pTexture_;
+	Texture* pTexture_;             //テクスチャ
 
 public:
 	Sprite();
@@ -43,15 +43,19 @@ public:
 	void Release();
 
 private:
-	virtual void InitVertexData();
-	HRESULT CreateVertexBuffer();
+	//-------------------Initialize関数から呼ばれる関数------------------
+	virtual void InitVertexData(); //頂点情報の準備
+	HRESULT CreateVertexBuffer();  //頂点バッファを作成
 
-	virtual void InitIndexData();
-	HRESULT CreateIndexBuffer();
-	HRESULT CreateConstanBuffer();
-	HRESULT LoadTexture();
+	virtual void InitIndexData();  //インデックス情報を準備
+	HRESULT CreateIndexBuffer();   //インデックスバッファを作成
 
+	HRESULT CreateConstanBuffer(); //コンスタントバッファを作成
 
-	void PassDataToCB(DirectX::XMMATRIX& worldMatrix);
-	void SetBufferToPipeline();
+	HRESULT LoadTexture();         //テクスチャをロード
+
+	//-------------------Draw関数から呼ばれる関数------------------
+
+	void PassDataToCB(DirectX::XMMATRIX& worldMatrix);  //コンスタントバッファに各種情報を渡す
+	void SetBufferToPipeline();                         //各バッファをパイプラインにセット
 };

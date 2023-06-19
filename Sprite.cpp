@@ -1,6 +1,8 @@
 #include "Sprite.h"
 #include "Camera.h"
 
+HRESULT hr = S_OK;
+
 Sprite::Sprite():
 	pVertexBuffer_(nullptr), pIndexBuffer_(nullptr), pConstantBuffer_(nullptr),pTexture_(nullptr)
 {
@@ -15,21 +17,6 @@ Sprite::~Sprite()
 
 HRESULT Sprite::Initialize()
 {
-	
-
-
-	
-
-
-
-
-
-	
-
-	
-
-	return S_OK;
-
 }
 
 void Sprite::Draw(XMMATRIX& worldMatrix)
@@ -81,9 +68,8 @@ void Sprite::Release()
 
 void Sprite::InitVertexData()
 {
-	HRESULT hr = S_OK;
 	// 頂点情報
-	VERTEX vertices[] =
+	VERTEX vertices_[] =
 	{
 		{ XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f)},   // 四角形の頂点（左上）
 		{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）
@@ -97,14 +83,14 @@ HRESULT Sprite::CreateVertexBuffer()
 {
 	// 頂点データ用バッファの設定
 	D3D11_BUFFER_DESC bd_vertex;
-	bd_vertex.ByteWidth = sizeof(vertices);
+	bd_vertex.ByteWidth = sizeof(index_);
 	bd_vertex.Usage = D3D11_USAGE_DEFAULT;
 	bd_vertex.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	bd_vertex.CPUAccessFlags = 0;
 	bd_vertex.MiscFlags = 0;
 	bd_vertex.StructureByteStride = 0;
-	D3D11_SUBRESOURCE_DATA data_vertex;
-	data_vertex.pSysMem = vertices;
+	D3D11_SUBRESOURCE_DATA data_vertex{};
+	data_vertex.pSysMem = pVertexBuffer_;
 
 	hr = Direct3D::pDevice_->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 	if (FAILED(hr))
@@ -113,13 +99,13 @@ HRESULT Sprite::CreateVertexBuffer()
 		MessageBox(nullptr, "頂点バッファの作成に失敗しました", "エラー", MB_OK);
 		return hr;
 	}
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 void Sprite::InitIndexData()
 {
 	//インデックス情報
-	int index[] = { 0,2,3, 0,1,2 };
+	int index_[] = { 0,2,3, 0,1,2 };
 }
 
 HRESULT Sprite::CreateIndexBuffer()
@@ -127,13 +113,13 @@ HRESULT Sprite::CreateIndexBuffer()
 	// インデックスバッファを生成する
 	D3D11_BUFFER_DESC   bd;
 	bd.Usage = D3D11_USAGE_DEFAULT;
-	bd.ByteWidth = sizeof(index);
+	bd.ByteWidth = sizeof(vertices_);
 	bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
 	bd.CPUAccessFlags = 0;
 	bd.MiscFlags = 0;
 
 	D3D11_SUBRESOURCE_DATA InitData;
-	InitData.pSysMem = index;
+	InitData.pSysMem = ;
 	InitData.SysMemPitch = 0;
 	InitData.SysMemSlicePitch = 0;
 
@@ -144,7 +130,7 @@ HRESULT Sprite::CreateIndexBuffer()
 		MessageBox(nullptr, "インデックスバッファの作成に失敗しました", "エラー", MB_OK);
 		return hr;
 	}
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 HRESULT Sprite::CreateConstanBuffer()
@@ -166,14 +152,14 @@ HRESULT Sprite::CreateConstanBuffer()
 		MessageBox(nullptr, "コンスタントバッファの作成に失敗しました", "エラー", MB_OK);
 		return hr;
 	}
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 HRESULT Sprite::LoadTexture()
 {
 	pTexture_ = new Texture;
 	pTexture_->Load("Assets\\Dice.png");
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 void Sprite::PassDataToCB(DirectX::XMMATRIX& worldMatrix)
