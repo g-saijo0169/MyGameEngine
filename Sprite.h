@@ -38,9 +38,17 @@ protected:
 public:
 	Sprite();
 	~Sprite();
+
+	//初期化　（ポリゴンを表示するための各種情報を準備）
+    //戻り値：成功/失敗
 	HRESULT Initialize();
-	void Draw(XMMATRIX& worldMatrix);
-	void Release();
+
+	//描画
+	//引数：worldMatrix ワールド行列
+ 	void Draw(XMMATRIX& worldMatrix); 
+
+	//解放
+	void Release();                    
 
 private:
 	//-------------------Initialize関数から呼ばれる関数------------------

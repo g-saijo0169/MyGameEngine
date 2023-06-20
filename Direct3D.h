@@ -25,8 +25,10 @@ namespace Direct3D
 	//シェーダー準備
 
 	HRESULT InitShader();
+	HRESULT InitShader3D();
+	HRESULT InitShader2D();
 
-
+	void SetShader(SHADER_TYPE type);
 
 	//描画開始
 

@@ -1,7 +1,9 @@
 #include "Sprite.h"
 #include "Camera.h"
+#include "Direct3D.h"
 
 HRESULT hr = S_OK;
+
 
 Sprite::Sprite():
 	pVertexBuffer_(nullptr), pIndexBuffer_(nullptr), pConstantBuffer_(nullptr),pTexture_(nullptr)
@@ -17,10 +19,42 @@ Sprite::~Sprite()
 
 HRESULT Sprite::Initialize()
 {
+	InitVertexData();
+	if (FAILED(CreateVertexBuffer()))
+	{
+		return E_FAIL;
+	}
+
+	InitIndexData();
+	if (FAILED(CreateIndexBuffer()))
+	{
+		return E_FAIL;
+	}
+
+	if (FAILED(CreateConstanBuffer()))
+	{
+		return E_FAIL;
+	}
+	
+	if (FAILED(LoadTexture()))
+	{
+		return E_FAIL;
+	}
+	
+	return S_OK;
 }
 
 void Sprite::Draw(XMMATRIX& worldMatrix)
 {
+	Direct3D::SetShader(SHADER_2D);
+
+	PassDataToCB(worldMatrix);
+
+	SetBufferToPipeline();
+
+	Direct3D::pContext_->DrawIndexed(indexNum, 0, 0);
+
+
 	//コンスタントバッファに渡す情報
 	CONSTANT_BUFFER cb;
 	cb.matW = XMMatrixTranspose(worldMatrix);
@@ -56,14 +90,6 @@ void Sprite::Release()
 {
 	SAFE_RELEASE(pTexture_);
 	SAFE_DELETE(pTexture_);
-
-	/*SAFE_RELEASE(pVertexBuffer_);
-	SAFE_RELEASE(pIndexBuffer_);
-	SAFE_RELEASE(pConstantBuffer_);*/
-
-	//pVertexBuffer_->Release();
-	//pIndexBuffer_->Release();
-	//pConstantBuffer_->Release();
 }
 
 void Sprite::InitVertexData()
@@ -164,10 +190,12 @@ HRESULT Sprite::LoadTexture()
 
 void Sprite::PassDataToCB(DirectX::XMMATRIX& worldMatrix)
 {
+
 }
 
 void Sprite::SetBufferToPipeline()
 {
+
 }
 
 

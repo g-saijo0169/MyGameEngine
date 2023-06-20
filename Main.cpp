@@ -121,6 +121,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
            // XMMATRIX matRX = XMMatrixRotationX(XMConvertToRadians(a));
             //XMMATRIX matRY = XMMatrixRotationY(XMConvertToRadians(b));
             //XMMATRIX matRZ = XMMatrixRotationZ(XMConvertToRadians(c));
+            XMMatrixIdentity();
             XMMATRIX matT = XMMatrixTranslation(0, 0, 0);
             XMMATRIX matS = XMMatrixScaling(1.0f, 1.0f, 1.0f);
             XMMATRIX mat = matT * matS;
@@ -145,6 +146,17 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
     //SAFE_DELETE(pDice);
 
 	return S_OK;
+}
+
+Transform::Transform() :
+
+    matTranslate_(XMMatrixIdentity()),
+    matRotate_(XMMatrixIdentity()),
+    matScale_(XMMatrixIdentity()),
+    position_(XMFLOAT3(0, 0, 0)),
+    rotate_(XMFLOAT3(0, 0, 0)),
+    scale_(XMFLOAT3(1, 1, 1))
+{
 }
 
 //ウィンドウプロシージャ（何かあった時によばれる関数）
