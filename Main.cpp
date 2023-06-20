@@ -1,10 +1,10 @@
 //インクルード
 #include <Windows.h>
 #include "Direct3D.h"
+//#include "Quad.h"
+#include "Camera.h"
 #include "Dice.h"
 #include "Sprite.h"
-#include "Camera.h"
-//#include "Quad.h"
 
 
 //定数宣言
@@ -14,161 +14,124 @@ const int WINDOW_HEIGHT = 600; //ウィンドウの高さ
 
 //プロトタイプ宣言
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-//Quad* pQuad = new Quad;
-//Dice* pDice = new Dice;
-Sprite* pSprite = new Sprite;
+
+
+//Quad* pQuad;
+//Dice* pDice;
 
 
 //エントリーポイント
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 {
-    
 	//ウィンドウクラス（設計図）を作成
-    WNDCLASSEX wc;
-    wc.cbSize = sizeof(WNDCLASSEX);             //この構造体のサイズ
-    wc.hInstance = hInstance;                   //インスタンスハンドル
-    wc.lpszClassName = WIN_CLASS_NAME;            //ウィンドウクラス名
-    wc.lpfnWndProc = WndProc;                   //ウィンドウプロシージャ
-    wc.style = CS_VREDRAW | CS_HREDRAW;         //スタイル（デフォルト）
-    wc.hIcon = LoadIcon(NULL, IDI_APPLICATION); //アイコン
-    wc.hIconSm = LoadIcon(NULL, IDI_WINLOGO);   //小さいアイコン
-    wc.hCursor = LoadCursor(NULL, IDC_HELP);   //マウスカーソル
-    wc.lpszMenuName = NULL;                     //メニュー（なし）
-    wc.cbClsExtra = 0;
-    wc.cbWndExtra = 0;
-    wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH); //背景（白）
+	WNDCLASSEX wc;
+	wc.cbSize = sizeof(WNDCLASSEX);             //この構造体のサイズ
+	wc.hInstance = hInstance;                   //インスタンスハンドル
+	wc.lpszClassName = WIN_CLASS_NAME;            //ウィンドウクラス名
+	wc.lpfnWndProc = WndProc;                   //ウィンドウプロシージャ
+	wc.style = CS_VREDRAW | CS_HREDRAW;         //スタイル（デフォルト）
+	wc.hIcon = LoadIcon(NULL, IDI_APPLICATION); //アイコン
+	wc.hIconSm = LoadIcon(NULL, IDI_WINLOGO);   //小さいアイコン
+	wc.hCursor = LoadCursor(NULL, IDC_ARROW);   //マウスカーソル
+	wc.lpszMenuName = NULL;                     //メニュー（なし）
+	wc.cbClsExtra = 0;
+	wc.cbWndExtra = 0;
+	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH); //背景（白）
+	RegisterClassEx(&wc); //クラスを登録
+
+	//ウィンドウサイズの計算
+	RECT winRect = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
+	AdjustWindowRect(&winRect, WS_OVERLAPPEDWINDOW, FALSE);
+	int winW = winRect.right - winRect.left;     //ウィンドウ幅
+	int winH = winRect.bottom - winRect.top;     //ウィンドウ高さ
+
+	//ウィンドウを作成
+	HWND hWnd = CreateWindow(
+		WIN_CLASS_NAME,         //ウィンドウクラス名
+		"サンプルゲーム",     //タイトルバーに表示する内容
+		WS_OVERLAPPEDWINDOW, //スタイル（普通のウィンドウ）
+		CW_USEDEFAULT,       //表示位置左（おまかせ）
+		CW_USEDEFAULT,       //表示位置上（おまかせ）
+		winW,               //ウィンドウ幅
+		winH,               //ウィンドウ高さ
+		NULL,                //親ウインドウ（なし）
+		NULL,                //メニュー（なし）
+		hInstance,           //インスタンス
+		NULL                 //パラメータ（なし）
+	);
+
+	//ウィンドウを表示
+	ShowWindow(hWnd, nCmdShow);
+
+	//Direct3D初期化
+	HRESULT hr;
+	hr = Direct3D::Initialize(winW, winH, hWnd);
+	if (FAILED(hr))
+	{
+		PostQuitMessage(0); //エラー起きたら強制終了
+	}
+
+	Camera::Initialize();
 
 
-    RegisterClassEx(&wc);  //クラスを登録
 
-    //ウィンドウサイズの計算
-    RECT winRect = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
-    AdjustWindowRect(&winRect, WS_OVERLAPPEDWINDOW, FALSE);
-    int winW = winRect.right - winRect.left;     //ウィンドウ幅
-    int winH = winRect.bottom - winRect.top;     //ウィンドウ高さ
+	//pQuad = new Quad;
+	//pQuad->Initialize();
 
-    //ウィンドウを作成
-    HWND hWnd = CreateWindow(
-        WIN_CLASS_NAME,         //ウィンドウクラス名
-        "サンプルゲーム",     //タイトルバーに表示する内容
-        WS_OVERLAPPEDWINDOW | WS_VISIBLE, //スタイル（普通のウィンドウ）
-        CW_USEDEFAULT,       //表示位置左（おまかせ）
-        CW_USEDEFAULT,       //表示位置上（おまかせ）
-        winW,               //ウィンドウ幅
-        winH,               //ウィンドウ高さ
-        NULL,                //親ウインドウ（なし）
-        NULL,                //メニュー（なし）
-        hInstance,           //インスタンス
-        NULL                 //パラメータ（なし）
-    );
+	Dice* pDice = new Dice;
+	hr = pDice->Initialize();
+	Sprite* pSprite = new Sprite;
+	hr = pSprite->Initialize();
 
-    //ウィンドウを表示
-    ShowWindow(hWnd, nCmdShow);
+	//メッセージループ（何か起きるのを待つ）
+	MSG msg;
+	ZeroMemory(&msg, sizeof(msg));
+	while (msg.message != WM_QUIT)
+	{
+		//メッセージあり
+		if (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
 
-    HRESULT hr;//こっからしたはhr使える
+		//メッセージなし
+		else
+		{
+			Camera::Update();
 
-    //Direct3D初期化
+			//ゲームの処理
+			Direct3D::BeginDraw();
 
-    hr = Direct3D::Initialize(winW, winH, hWnd);
-    if (FAILED(hr))
-    {
-        MessageBox(nullptr, "Direct3Dの初期化に失敗しました", "エラー", MB_OK);
-        PostQuitMessage(0);  //プログラム終了
-    }
-    //pQuad = new Quad;
-    //pDice = new Dice;
-    pSprite = new Sprite;
+			static float angle = 0;
+			angle += 0.05;
+			XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(0, 3, 0);
+			pDice->Draw(mat);
 
-    //hr = pQuad->Initialize();
-    //hr = pDice->Initialize();
-    hr = pSprite->Initialize();
-    if (FAILED(hr))
-    {
-        MessageBox(nullptr, "Diceの初期化に失敗しました", "エラー", MB_OK);
-        PostQuitMessage(0);  //プログラム終了
-    }
+			mat = XMMatrixScaling(512.0f / 800.0f, 256.0f / 600.0f, 1.0f);
+			pSprite->Draw(mat);
 
-    Camera::Initialize();
+			Direct3D::EndDraw();
 
-    //メッセージループ（何か起きるのを待つ）
-    MSG msg;
-    ZeroMemory(&msg, sizeof(msg));
-    while (msg.message != WM_QUIT)//閉じられたら
-    {
-        //メッセージあり
-        if (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
+		}
+	}
+	//SAFE_DELETE(pQuad);
+	SAFE_DELETE(pDice);
+	SAFE_DELETE(pSprite);
 
-        //メッセージなし
-        else
-        {
-            Camera::Update();
-            //ゲームの処理
+	Direct3D::Release();
 
-            Direct3D::BeginDraw();
-           
-
-            //描画処理
-            static float a = 0;
-            static float b = 0;
-            static float c = 0;
-            a += 0.05;
-            b += 0.02;
-            c += 0.01;
-           // XMMATRIX matRX = XMMatrixRotationX(XMConvertToRadians(a));
-            //XMMATRIX matRY = XMMatrixRotationY(XMConvertToRadians(b));
-            //XMMATRIX matRZ = XMMatrixRotationZ(XMConvertToRadians(c));
-            XMMatrixIdentity();
-            XMMATRIX matT = XMMatrixTranslation(0, 0, 0);
-            XMMATRIX matS = XMMatrixScaling(1.0f, 1.0f, 1.0f);
-            XMMATRIX mat = matT * matS;
-            
-
-
-            //pQuad->Draw(mat);
-            //pDice->Draw(mat);
-            pSprite->Draw(mat);
-            Direct3D::EndDraw();
-
-        }
-    }
-    
-    
-    Direct3D::Release();
-    //pQuad->Release();
-    //pDice->Release();
-    pSprite->Release();
-    //SAFE_DELETE(pQuad);
-    SAFE_DELETE(pSprite);
-    //SAFE_DELETE(pDice);
-
-	return S_OK;
-}
-
-Transform::Transform() :
-
-    matTranslate_(XMMatrixIdentity()),
-    matRotate_(XMMatrixIdentity()),
-    matScale_(XMMatrixIdentity()),
-    position_(XMFLOAT3(0, 0, 0)),
-    rotate_(XMFLOAT3(0, 0, 0)),
-    scale_(XMFLOAT3(1, 1, 1))
-{
+	return 0;
 }
 
 //ウィンドウプロシージャ（何かあった時によばれる関数）
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-  
-    switch (msg)
-    {
-    case WM_DESTROY:
-        PostQuitMessage(0);  //プログラム終了
-        return 0;
-    }
-    return DefWindowProc(hWnd, msg, wParam, lParam);//デフォルトウィンドウプロシージャ
+	switch (msg)
+	{
+	case WM_DESTROY:
+		PostQuitMessage(0);  //プログラム終了
+		return 0;
+	}
+	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
-
