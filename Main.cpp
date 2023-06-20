@@ -124,7 +124,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	return 0;
 }
 
-//ウィンドウプロシージャ（何かあった時によばれる関数）
+//ウィンドウプロシージャ（何かあった時よばれる関数）
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
