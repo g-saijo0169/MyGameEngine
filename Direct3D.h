@@ -1,6 +1,7 @@
 #pragma once
 
 #include <d3d11.h>
+#include<DirectXMath.h>
 #include <assert.h>
 
 //リンカ
@@ -24,11 +25,11 @@ namespace Direct3D
 
 	//シェーダー準備
 
-	HRESULT InitShader();
-	HRESULT InitShader3D();
-	HRESULT InitShader2D();
+	//HRESULT InitShader();
+	//HRESULT InitShader3D();
+	//HRESULT InitShader2D();
 
-	void SetShader(SHADER_TYPE type);
+	//void SetShader(SHADER_TYPE type);
 
 	//描画開始
 
