@@ -49,8 +49,8 @@ public:
 	HRESULT Initialize();
 
 	//描画
-	//引数：worldMatrix	ワールド行列
-	void Draw(XMMATRIX& worldMatrix);
+	//引数：transform	トランスフォームクラスオブジェクト
+	void Draw(Transform& transform);
 
 	//解放
 	void Release();
@@ -68,6 +68,8 @@ private:
 	HRESULT CreateConstantBuffer();		//コンスタントバッファ作成
 
 	HRESULT LoadTexture();				//テクスチャをロード
+
+	void PassDataToCB(XMMATRIX worldMatrix);
 
 
 	//---------Draw関数から呼ばれる関数---------
