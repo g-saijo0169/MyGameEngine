@@ -137,7 +137,7 @@ void Fbx::IntConstantBuffer()
 
 	// コンスタントバッファの作成
 	HRESULT hr;
-	//hr = Direct3D::pDevice_->CreateBuffer(&cb, nullptr, &pConstantBuffer_);
+	hr = Direct3D::pDevice_->CreateBuffer(&cb, nullptr, &pConstantBuffer_);
 	//if (FAILED(hr))
 	//{
 	//	MessageBox(NULL, "コンスタントバッファの作成に失敗しました", "エラー", MB_OK);
