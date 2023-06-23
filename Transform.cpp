@@ -32,5 +32,6 @@ XMMATRIX Transform::GetWorldMatrix()
 
 XMMATRIX Transform::GetNormalMatrix()
 {
+    //回転とスケールの逆行列
     return matRotate_ * XMMatrixInverse(nullptr, matScale_);
 }
