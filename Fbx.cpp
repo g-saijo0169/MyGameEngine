@@ -2,6 +2,7 @@
 #include "Direct3D.h"
 #include "Sprite.h"
 #include "Quad.h"
+#include "Camera.h"
 
 
 
@@ -42,6 +43,8 @@ HRESULT Fbx::Load(std::string fileName)
 	pFbxManager->Destroy();
 	return S_OK;
 }
+
+
 
 //頂点バッファ準備
 void Fbx::InitVertex(fbxsdk::FbxMesh* mesh)
@@ -122,7 +125,7 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* mesh)
 	//return S_OK;
 }
 
-void IntConstantBuffer()
+void Fbx::IntConstantBuffer()
 {
 	D3D11_BUFFER_DESC cb;
 	cb.ByteWidth = sizeof(CONSTANT_BUFFER);
@@ -145,6 +148,16 @@ void IntConstantBuffer()
 
 void Fbx::Draw(Transform& transform)
 {
+	Direct3D::SetShader(SHADER_3D);
+	transform.Calclation();//トランスフォームを計算
+	//コンスタントバッファに情報を渡す
+	PassDataToCB(transform);
+	//頂点バッファ、インデックスバッファ、コンスタントバッファをパイプラインにセット
+	SetBufferToPipeline();
+	//描画
+	Direct3D::pContext_->DrawIndexed(vertexCount_, 0, 0);
+
+
 }
 
 void Fbx::Release()
@@ -153,3 +166,45 @@ void Fbx::Release()
 	SAFE_RELEASE(pIndexBuffer_);
 	SAFE_RELEASE(pVertexBuffer_);
 }
+
+void Fbx::PassDataToCB(Transform transform)
+{
+	CONSTANT_BUFFER cb;
+	cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
+	cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
+
+	D3D11_MAPPED_SUBRESOURCE pdata;
+	Direct3D::pContext_->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
+	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
+
+	/*ID3D11SamplerState* pSampler = pTexture_->GetSampler();
+
+	Direct3D::pContext_->PSSetSamplers(0, 1, &pSampler);
+
+	ID3D11ShaderResourceView* pSRV = pTexture_->GetSRV();
+
+	Direct3D::pContext_->PSSetShaderResources(0, 1, &pSRV);*/
+
+	Direct3D::pContext_->Unmap(pConstantBuffer_, 0);	//再開
+}
+
+void Fbx::SetBufferToPipeline()
+{
+	//頂点バッファ
+	UINT stride = sizeof(VERTEX);
+	UINT offset = 0;
+	Direct3D::pContext_->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
+
+	// インデックスバッファーをセット
+	stride = sizeof(int);
+	offset = 0;
+	Direct3D::pContext_->IASetIndexBuffer(pIndexBuffer_, DXGI_FORMAT_R32_UINT, 0);
+
+	//コンスタントバッファ
+	Direct3D::pContext_->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//頂点シェーダー用	
+	Direct3D::pContext_->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
+
+	Direct3D::pContext_->DrawIndexed(vertexCount_, 0, 0);
+}
+
+

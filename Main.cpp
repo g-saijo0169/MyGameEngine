@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Dice.h"
 #include "Sprite.h"
+#include "Fbx.h"
 #include "Transform.h"
 
 
@@ -83,6 +84,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	hr = pDice->Initialize();
 	Sprite* pSprite = new Sprite;
 	hr = pSprite->Initialize();
+	Fbx* pFbx = new Fbx;
+	hr = pFbx->Load("Assets\\oden.fbx");
+	if (FAILED(hr))
+	{
+		MessageBox(NULL, "テクスチャの作成に失敗しました", "エラー", MB_OK);
+		return hr;
+	}
 
 	//メッセージループ（何か起きるのを待つ）
 	MSG msg;
@@ -120,6 +128,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			spriteTransform.scale_.x = 512.0f / 800.0f;
 			spriteTransform.scale_.y = 256.0f / 600.0f;
 			pSprite->Draw(spriteTransform);
+
+			Transform odenTransform;
+			odenTransform.position_.x = 0.0f;
+			pFbx->Draw(odenTransform);
+
+
 
 			Direct3D::EndDraw();
 

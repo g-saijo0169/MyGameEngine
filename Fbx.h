@@ -32,6 +32,9 @@ class Fbx
 	void InitVertex(fbxsdk::FbxMesh* mesh);
 	void InitIndex(fbxsdk::FbxMesh* mesh);
 	void IntConstantBuffer();
+
+	void PassDataToCB(Transform transform);	//コンスタントバッファに各種情報を渡す
+	void SetBufferToPipeline();
 public:
 
 	Fbx();
