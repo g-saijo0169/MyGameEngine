@@ -31,6 +31,7 @@ class Fbx
 
 	void InitVertex(fbxsdk::FbxMesh* mesh);
 	void InitIndex(fbxsdk::FbxMesh* mesh);
+	void IntConstantBuffer();
 public:
 
 	Fbx();
