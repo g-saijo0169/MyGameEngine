@@ -30,6 +30,7 @@ class Fbx
 	ID3D11Buffer* pConstantBuffer_;//コンスタントバッファ
 
 	void InitVertex(fbxsdk::FbxMesh* mesh);
+	void InitIndex(fbxsdk::FbxMesh* mesh);
 public:
 
 	Fbx();

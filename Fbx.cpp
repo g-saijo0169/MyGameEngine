@@ -34,6 +34,7 @@ HRESULT Fbx::Load(std::string fileName)
 	polygonCount_ = mesh->GetPolygonCount();	//ポリゴンの数
 
 	 InitVertex(mesh);		//頂点バッファ準備
+	 InitIndex(mesh);		//インデックスバッファ準備
 
 
 	//マネージャ解放
@@ -62,6 +63,41 @@ void Fbx::InitVertex(fbxsdk::FbxMesh* mesh)
 		}
 	}
 
+	HRESULT hr;
+	D3D11_BUFFER_DESC bd_vertex;
+	bd_vertex.ByteWidth = sizeof(VERTEX) * vertexCount_;
+	bd_vertex.Usage = D3D11_USAGE_DEFAULT;
+	bd_vertex.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bd_vertex.CPUAccessFlags = 0;
+	bd_vertex.MiscFlags = 0;
+	bd_vertex.StructureByteStride = 0;
+	D3D11_SUBRESOURCE_DATA data_vertex;
+	data_vertex.pSysMem = vertices;
+	hr = Direct3D::pDevice_->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
+	if (FAILED(hr))
+	{
+		MessageBox(NULL, "頂点バッファの作成に失敗しました", "エラー", MB_OK);
+		return hr;
+	}
+	return S_OK;
+}
+
+//インデックスバッファ準備
+void Fbx::InitIndex(fbxsdk::FbxMesh* mesh)
+{
+	int* index = new int[polygonCount_ * 3];
+	int count = 0;
+
+	//全ポリゴン
+	for (DWORD poly = 0; poly < polygonCount_; poly++)
+	{
+		//3頂点分
+		for (DWORD vertex = 0; vertex < 3; vertex++)
+		{
+			index[count] = mesh->GetPolygonVertex(poly, vertex);
+			count++;
+		}
+	}
 }
 
 void Fbx::Draw(Transform& transform)
