@@ -131,7 +131,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 			Transform odenTransform;
 			odenTransform.position_.x = 0.0f;
-			odenTransform.position_.y = 1.0f;
 			pFbx->Draw(odenTransform);
 
 
@@ -143,6 +142,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	//SAFE_DELETE(pQuad);
 	SAFE_DELETE(pDice);
 	SAFE_DELETE(pSprite);
+	SAFE_DELETE(pFbx);
 
 	Direct3D::Release();
 
