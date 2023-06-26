@@ -131,6 +131,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 			Transform odenTransform;
 			odenTransform.position_.x = 0.0f;
+			odenTransform.position_.y = 1.0f;
 			pFbx->Draw(odenTransform);
 
 
