@@ -6,7 +6,8 @@
 
 
 
-Fbx::Fbx() : vertexCount_(0), polygonCount_(0)
+Fbx::Fbx() : vertexCount_(0), polygonCount_(0),pVertexBuffer_(nullptr),
+                          pIndexBuffer_(nullptr),pConstantBuffer_(nullptr)
 {
 }
 
@@ -116,7 +117,7 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* mesh)
 	InitData.SysMemSlicePitch = 0;
 
 	HRESULT hr;
-	//hr = Direct3D::pDevice_->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
+	hr = Direct3D::pDevice_->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
 	//if (FAILED(hr))
 	//{
 	//	MessageBox(NULL, "インデックスバッファの作成に失敗しました", "エラー", MB_OK);

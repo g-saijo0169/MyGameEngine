@@ -130,7 +130,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			pSprite->Draw(spriteTransform);
 
 			Transform odenTransform;
-			odenTransform.position_.x = 0.0f;
+			odenTransform.rotate_.y = angle;
 			pFbx->Draw(odenTransform);
 
 
