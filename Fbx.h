@@ -5,12 +5,21 @@
 #include <string>
 #include "Transform.h"
 
+
 #pragma comment(lib, "LibFbxSDK-Md.lib")
 #pragma comment(lib, "LibXml2-Md.lib")
 #pragma comment(lib, "zlib-Md.lib")
 
+class Texture;
+
 class Fbx
 {
+	//マテリアル
+	struct MATERIAL
+	{
+		Texture* pTexture;
+	};
+
 	struct CONSTANT_BUFFER
 	{
 		XMMATRIX	matWVP;
@@ -24,14 +33,17 @@ class Fbx
 
 	int vertexCount_;	//頂点数
 	int polygonCount_;	//ポリゴン数
+	int materialCount_;	//マテリアルの個数
 
 	ID3D11Buffer* pVertexBuffer_;  //頂点バッファ
 	ID3D11Buffer* pIndexBuffer_;   //インデックスバッファ
 	ID3D11Buffer* pConstantBuffer_;//コンスタントバッファ
+	MATERIAL* pMaterialList_;
 
 	void InitVertex(fbxsdk::FbxMesh* mesh);
 	void InitIndex(fbxsdk::FbxMesh* mesh);
 	void IntConstantBuffer();
+	void InitMaterial(fbxsdk::FbxNode* pNode);
 
 	void PassDataToCB(Transform transform);	//コンスタントバッファに各種情報を渡す
 	void SetBufferToPipeline();

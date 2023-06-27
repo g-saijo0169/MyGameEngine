@@ -120,14 +120,14 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			Transform diceTransform;
 			diceTransform.position_.y = 3.0f;
 			diceTransform.rotate_.y = angle;
-			pDice->Draw(diceTransform);
+			//pDice->Draw(diceTransform);
 
 			//mat = XMMatrixScaling(512.0f / 800.0f, 256.0f / 600.0f, 1.0f);
 
 			Transform spriteTransform;
 			spriteTransform.scale_.x = 512.0f / 800.0f;
 			spriteTransform.scale_.y = 256.0f / 600.0f;
-			pSprite->Draw(spriteTransform);
+			//pSprite->Draw(spriteTransform);
 
 			Transform odenTransform;
 			odenTransform.rotate_.y = angle;
