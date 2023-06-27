@@ -29,6 +29,7 @@ class Fbx
 	struct VERTEX
 	{
 		XMVECTOR position;
+		XMVECTOR uv;
 	};
 
 	int vertexCount_;	//頂点数
@@ -36,7 +37,7 @@ class Fbx
 	int materialCount_;	//マテリアルの個数
 
 	ID3D11Buffer* pVertexBuffer_;  //頂点バッファ
-	ID3D11Buffer* pIndexBuffer_;   //インデックスバッファ
+	ID3D11Buffer** pIndexBuffer_;   //インデックスバッファ
 	ID3D11Buffer* pConstantBuffer_;//コンスタントバッファ
 	MATERIAL* pMaterialList_;
 
@@ -46,7 +47,7 @@ class Fbx
 	void InitMaterial(fbxsdk::FbxNode* pNode);
 
 	void PassDataToCB(Transform transform);	//コンスタントバッファに各種情報を渡す
-	void SetBufferToPipeline();
+	void SetBufferToPipeline(int i);
 public:
 
 	Fbx();
