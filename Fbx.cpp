@@ -117,8 +117,11 @@ void Fbx::InitVertex(fbxsdk::FbxMesh* mesh)
 void Fbx::InitIndex(fbxsdk::FbxMesh* mesh)
 {
 	pIndexBuffer_ = new ID3D11Buffer * [materialCount_];
+	indexCount_ = std::vector<int>(materialCount_);
 
-	int* index = new int[polygonCount_ * 3];
+	std::vector<int> index(polygonCount_ * 3);//ポリゴン数*３＝全頂点分用意
+	//int* index = new int[polygonCount_ * 3];
+
 
 	for (int i = 0; i < materialCount_; i++)
 	{
@@ -140,8 +143,8 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* mesh)
 					count++;
 				}
 			}
-			
 		}
+		indexCount_[i] = count;
 
 		D3D11_BUFFER_DESC   bd;
 		bd.Usage = D3D11_USAGE_DEFAULT;
@@ -151,7 +154,7 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* mesh)
 		bd.MiscFlags = 0;
 
 		D3D11_SUBRESOURCE_DATA InitData;
-		InitData.pSysMem = index;
+		InitData.pSysMem = index.data();
 		InitData.SysMemPitch = 0;
 		InitData.SysMemSlicePitch = 0;
 
@@ -204,16 +207,13 @@ void Fbx::Draw(Transform& transform)
 
 
 
-	Direct3D::pContext_->Unmap(pConstantBuffer_, 0);	//再開
-
-
-
 	//頂点バッファ、インデックスバッファ、コンスタントバッファをパイプラインにセット
 	//頂点バッファ
 	UINT stride = sizeof(VERTEX);
 	UINT offset = 0;
 	Direct3D::pContext_->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
 
+	Direct3D::pContext_->Unmap(pConstantBuffer_, 0);	//再開
 
 
 	for (int i = 0; i < materialCount_; i++)
@@ -236,7 +236,7 @@ void Fbx::Draw(Transform& transform)
 		}
 
 		//描画
-		Direct3D::pContext_->DrawIndexed(polygonCount_ * 3, 0, 0);
+		Direct3D::pContext_->DrawIndexed(indexCount_[i], 0, 0);
 	}
 
 }

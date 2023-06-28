@@ -3,6 +3,7 @@
 #include <d3d11.h>
 #include <fbxsdk.h>
 #include <string>
+#include <vector>
 #include "Transform.h"
 
 
@@ -40,6 +41,7 @@ class Fbx
 	ID3D11Buffer** pIndexBuffer_;   //インデックスバッファ
 	ID3D11Buffer* pConstantBuffer_;//コンスタントバッファ
 	MATERIAL* pMaterialList_;
+	std::vector <int> indexCount_;
 
 	void InitVertex(fbxsdk::FbxMesh* mesh);
 	void InitIndex(fbxsdk::FbxMesh* mesh);
