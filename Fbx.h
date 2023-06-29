@@ -19,6 +19,7 @@ class Fbx
 	struct MATERIAL
 	{
 		Texture* pTexture;
+		XMFLOAT4	diffuse;
 	};
 
 	struct CONSTANT_BUFFER
