@@ -7,7 +7,7 @@
 #include "Sprite.h"
 #include "Fbx.h"
 #include "Transform.h"
-
+#include "Input.h"
 
 //定数宣言
 const char* WIN_CLASS_NAME = "SampleGame";  //ウィンドウクラス名
@@ -73,6 +73,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 		PostQuitMessage(0); //エラー起きたら強制終了
 	}
 
+	Input::Initialize(hWnd);
+
+
 	Camera::Initialize();
 
 
@@ -102,6 +105,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
+
+	
 		}
 
 		//メッセージなし
@@ -133,17 +138,22 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			odenTransform.rotate_.y = angle;
 			pFbx->Draw(odenTransform);
 
+			//入力情報の更新
+			Input::Update;
+
 
 
 			Direct3D::EndDraw();
 
 		}
+
 	}
 	//SAFE_DELETE(pQuad);
 	SAFE_DELETE(pDice);
 	SAFE_DELETE(pSprite);
 	SAFE_DELETE(pFbx);
 
+	Input::Release();
 	Direct3D::Release();
 
 	return 0;
