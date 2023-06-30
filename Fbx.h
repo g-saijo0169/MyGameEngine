@@ -26,6 +26,9 @@ class Fbx
 	{
 		XMMATRIX	matWVP;
 		XMMATRIX	matNormal;
+
+		XMFLOAT4    diffuseColor;
+		int         isTexture;
 	};
 
 	struct VERTEX
@@ -50,8 +53,7 @@ class Fbx
 	void IntConstantBuffer();
 	void InitMaterial(fbxsdk::FbxNode* pNode);
 
-	void PassDataToCB(Transform transform);	//コンスタントバッファに各種情報を渡す
-	void SetBufferToPipeline(int i);
+
 public:
 
 	Fbx();
