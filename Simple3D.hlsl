@@ -40,7 +40,7 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
 	outData.uv = uv;
 
 	normal = mul(normal, matNormal);
-	float4 light = float4(1, 0.8, -0.3, 0);
+	float4 light = float4(0, 1, -1, 0);// float4(1, 0.8, -0.3, 0)
 	light = normalize(light);
 	outData.color = clamp(dot(normal, light), 0, 1);
 
@@ -55,8 +55,8 @@ float4 PS(VS_OUT inData) : SV_Target
 {
 	float4 lightSource = float4(1.0, 1.0, 1.0, 1.0);
 	float4 ambentSource = float4(0.2, 0.2, 0.2, 1.0);
-	float  diffuse;
-	float  ambient;
+	float4  diffuse;//float‚É‚È‚Á‚Ä‚½
+	float4  ambient;
 
 	if (isTexture )
 	{
