@@ -48,9 +48,9 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
 	return outData;
 }
 
-//───────────────────────────────────────
+//──────────────────────────────────────
 // ピクセルシェーダ
-//───────────────────────────────────────
+//──────────────────────────────────────
 float4 PS(VS_OUT inData) : SV_Target
 {
 	float4 lightSource = float4(1.0, 1.0, 1.0, 1.0);
