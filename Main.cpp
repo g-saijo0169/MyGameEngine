@@ -94,12 +94,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 		MessageBox(NULL, "テクスチャの作成に失敗しました", "エラー", MB_OK);
 		return hr;
 	}
-
 	//メッセージループ（何か起きるのを待つ）
 	MSG msg;
 	ZeroMemory(&msg, sizeof(msg));
 	while (msg.message != WM_QUIT)
 	{
+		
 		//メッセージあり
 		if (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
 		{
@@ -107,6 +107,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			DispatchMessage(&msg);
 
 	
+			
 		}
 
 		//メッセージなし
@@ -116,7 +117,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 			//ゲームの処理
 			Direct3D::BeginDraw();
-
+			
 			static float angle = 0;
 			angle += 0.05;
 			//XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(angle)) * XMMatrixTranslation(0, 3, 0);
@@ -141,7 +142,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			//入力情報の更新
 			Input::Update;
 
-
+		
 
 			Direct3D::EndDraw();
 
