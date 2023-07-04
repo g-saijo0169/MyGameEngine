@@ -140,7 +140,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			spriteTransform.scale_.y = 256.0f / 600.0f;
 			//pSprite->Draw(spriteTransform);
 
-			Transform odenTransform;
+			static Transform odenTransform;
 			odenTransform.rotate_.y = angle;
 			pFbx->Draw(odenTransform);
 
@@ -154,6 +154,15 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 				}
 			}
 			
+			if (Input::IsKey(DIK_LEFT))
+			{
+				odenTransform.position_.x -= 0.01f;
+			}
+
+			if (Input::IsKey(DIK_RIGHT))
+			{
+				odenTransform.position_.x += 0.01f;
+			}
 
 			Direct3D::EndDraw();
 			
@@ -176,6 +185,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
+	case WM_MOUSEMOVE:
+		Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
+		return 0;
+
 	case WM_DESTROY:
 		PostQuitMessage(0);  //ÉvÉçÉOÉâÉÄèIóπ
 		return 0;

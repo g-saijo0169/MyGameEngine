@@ -1,11 +1,14 @@
 #include "Input.h"
 
+
 namespace Input
 {
 	LPDIRECTINPUT8   pDInput = nullptr;
 	LPDIRECTINPUTDEVICE8 pKeyDevice = nullptr;	//デバイスオブジェクト
 	BYTE keyState[256] = { 0 };					//現在の各キーの状態
 	BYTE prevKeyState[256];    //前フレームでの各キーの状態
+
+	XMVECTOR mousePosition;
 	void Initialize(HWND hWnd)
 	{
 		DirectInput8Create(GetModuleHandle(nullptr),
@@ -45,6 +48,7 @@ namespace Input
 
 	bool IsKeyUp(int keyCode)
 	{
+		//今は押してない、前回は押してる
 		//今は0で前は１
 		if (prevKeyState[keyCode] != keyState[keyCode] && !(IsKey(keyCode)))
 		{
@@ -58,5 +62,15 @@ namespace Input
 		SAFE_RELEASE(pDInput);
 		SAFE_RELEASE(pKeyDevice);
 
+	}
+
+	XMVECTOR GetMousePosition()
+	{
+		return mousePosition;
+	}
+
+	void SetMousePosition(int x, int y)
+	{
+		mousePosition = XMVectorSet((float)x, (float)y, 0, 0);
 	}
 }
