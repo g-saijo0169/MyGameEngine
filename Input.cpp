@@ -3,27 +3,50 @@
 namespace Input
 {
 	LPDIRECTINPUT8   pDInput = nullptr;
-	LPDIRECTINPUTDEVICE8 pKeyDevice = nullptr;
-	BYTE keyState[256] = { 0 }; 
-
+	LPDIRECTINPUTDEVICE8 pKeyDevice = nullptr;	//デバイスオブジェクト
+	BYTE keyState[256] = { 0 };					//現在の各キーの状態
+	BYTE prevKeyState[256];    //前フレームでの各キーの状態
 	void Initialize(HWND hWnd)
 	{
-		DirectInput8Create(GetModuleHandle(nullptr), DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID**)&pDInput, nullptr);
-
-		pDInput->CreateDevice(GUID_SysKeyboard, &pKeyDevice, nullptr);                //デバイスオブジェクトを作成
- 		pKeyDevice->SetDataFormat(&c_dfDIKeyboard);                                   //デバイスの種類（今回はキーボード）を指定
-		pKeyDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND); //強調レベル（他の実行中のアプリに対する優先度）の設定 をしている。
+		DirectInput8Create(GetModuleHandle(nullptr),
+			DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID**)&pDInput, nullptr);
+		pDInput->CreateDevice(GUID_SysKeyboard, &pKeyDevice, nullptr);
+		pKeyDevice->SetDataFormat(&c_dfDIKeyboard);
+		pKeyDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
 	}
 
 	void Update()
 	{
+		memcpy(prevKeyState, keyState, sizeof(BYTE) * 256);
 		pKeyDevice->Acquire();
 		pKeyDevice->GetDeviceState(sizeof(keyState), &keyState);
+
 	}
 
 	bool IsKey(int keyCode)
 	{
-		if (keyState[keyCode] = 1)
+		if (keyState[keyCode] & 0x80)//(0b10000000)//(1<<7)でもお可能ですが、今回は16進数にいたします
+		{
+			return true;
+		}
+		return false;
+	}
+
+	bool IsKeyDown(int keyCode)
+	{
+		//今は押してて、前回は押してない
+		//今は1で前は0
+		if (prevKeyState[keyCode] != keyState[keyCode] && IsKey(keyCode))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	bool IsKeyUp(int keyCode)
+	{
+		//今は0で前は１
+		if (prevKeyState[keyCode] != keyState[keyCode] && !(IsKey(keyCode)))
 		{
 			return true;
 		}
