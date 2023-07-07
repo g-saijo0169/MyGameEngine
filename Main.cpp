@@ -69,6 +69,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	//DirectInputの初期化
 	Input::Initialize(hWnd);
 
+	//Camera初期化
 	Camera::Initialize();
 
 	pRootJob = new RootJob;
@@ -101,7 +102,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 			//描画
 			Direct3D::BeginDraw();
-			
+
+			//ルートジョブからすべてのオブジェクトのドローを呼ぶ
+			pRootJob->DrawSub();
 					
 			Direct3D::EndDraw();
 			
