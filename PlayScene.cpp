@@ -21,7 +21,6 @@ void PlayScene::Initialize()
 //XV
 void PlayScene::Update()
 {
-	this->transform_.rotate_.y += 1;
 }
 
 //•`‰æ
