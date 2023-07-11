@@ -129,6 +129,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 			//“ü—Í‚Ìˆ—
 			Input::Update();
+
 			pRootJob->UpdateSub();
 
 			//•`‰æ

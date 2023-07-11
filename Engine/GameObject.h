@@ -26,6 +26,8 @@ public:
 	void UpdateSub();
 	void ReleaseSub();
 
+	bool isDead();
+
 	template <class T>
 	void Instantiate(GameObject* parent)
 	{
