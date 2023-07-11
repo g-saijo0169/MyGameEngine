@@ -123,6 +123,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			timeEndPeriod(1);
 
 
+
 			//ゲームの処理
 			//カメラの更新
 			Camera::Update();

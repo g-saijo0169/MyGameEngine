@@ -27,13 +27,22 @@ public:
 	void ReleaseSub();
 
 	bool isDead();
+	void KillMe();
 
 	template <class T>
-	void Instantiate(GameObject* parent)
+	GameObject* Instantiate(GameObject* parent)
 	{
 		T* pObject;
 		pObject = new T(parent);
 		pObject->Initialize();
 		childList_.push_back(pObject);
+		return pObject;
 	}
+
+private:
+	struct OBJECT_STATE
+	{
+		unsigned dead : 1;			//íœ‚·‚é‚©
+	};
+	OBJECT_STATE state_;
 };
