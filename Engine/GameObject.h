@@ -29,6 +29,9 @@ public:
 	bool isDead();
 	void KillMe();
 
+	void setPosition(XMFLOAT3 position);
+	XMFLOAT3 getPosition();
+
 	template <class T>
 	GameObject* Instantiate(GameObject* parent)
 	{
@@ -45,4 +48,6 @@ private:
 		unsigned dead : 1;			//çÌèúÇ∑ÇÈÇ©
 	};
 	OBJECT_STATE state_;
+
+	XMFLOAT3 position;
 };

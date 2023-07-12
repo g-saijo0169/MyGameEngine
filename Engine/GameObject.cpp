@@ -1,12 +1,16 @@
 #include "GameObject.h"
 #include "Direct3D.h"
 
-GameObject::GameObject(GameObject* parent, const std::string& name)
+GameObject::GameObject()
+	:pParent_(nullptr)
 {
 }
 
-GameObject::GameObject()
+GameObject::GameObject(GameObject* parent, const std::string& name)
+	:pParent_(nullptr),objectName_(name)
 {
+	if (parent != nullptr)
+		this->transform_.pParent_ = &(parent->transform_);
 }
 
 GameObject::~GameObject()
@@ -62,3 +66,15 @@ void GameObject::KillMe()
 {
 	state_.dead = 1;
 }
+
+void GameObject::setPosition(XMFLOAT3 position)
+{
+	transform_.position_ = position;
+}
+
+XMFLOAT3 GameObject::getPosition()
+{
+	return transform_.position_;
+}
+
+

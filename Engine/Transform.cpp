@@ -26,8 +26,12 @@ void Transform::Calclation()
 
 XMMATRIX Transform::GetWorldMatrix()
 {
-    Calclation();
-    return matScale_ * matRotate_ * matTranslate_;
+    if (pParent_ != nullptr)
+    {
+     //親があったら親のワールドマトリクスを掛ける
+     return  matScale_ * matRotate_ * matTranslate_ * pParent_->GetWorldMatrix();
+    }else //親がnullptrの時は、この変換だけ
+     return matScale_ * matRotate_ * matTranslate_;
 }
 
 XMMATRIX Transform::GetNormalMatrix()

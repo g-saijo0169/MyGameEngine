@@ -13,17 +13,21 @@ void Mini::Initialize()
 {
 	pFbx = new Fbx;
 	pFbx->Load("Assets\\oden.fbx");
+
+	transform_.position_.x = 2.0f;
+	transform_.position_.y = 1.0f;
+
+	transform_.scale_.x = 0.2f;
+	transform_.scale_.y = 0.2f;
+	transform_.scale_.z = 0.2f;
 }
 
 //çXêV
 void Mini::Update()
 {
-	transform_.position_.x = 5;
-	transform_.rotate_.y += 1;
-	transform_.scale_.x = 0.5f;
-	transform_.scale_.y = 0.5f;
-	transform_.scale_.z = 0.5f;
-	if (Input::IsKeyDown(DIK_K))
+	//transform_.rotate_.y += 1;
+
+	if (Input::IsKeyDown(DIK_C))
 	{
 		KillMe();
 	}

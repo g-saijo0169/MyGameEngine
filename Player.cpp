@@ -15,6 +15,8 @@ void Player::Initialize()
 	pFbx = new Fbx;
 	pFbx->Load("Assets\\oden.fbx");
 	Instantiate<Mini>(this);
+	GameObject* pMN2 = Instantiate<Mini>(this);
+	pMN2->setPosition(XMFLOAT3(-2.0f,1.0f,0));
 }
 
 //XV
