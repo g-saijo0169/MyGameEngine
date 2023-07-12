@@ -25,9 +25,9 @@ void Mini::Initialize()
 //XV
 void Mini::Update()
 {
-	//transform_.rotate_.y += 1;
+	transform_.rotate_.y += 1;
 
-	if (Input::IsKeyDown(DIK_C))
+	if (transform_.rotate_.y > 200)
 	{
 		KillMe();
 	}

@@ -38,6 +38,6 @@ void Player::Draw()
 //ŠJ•ú
 void Player::Release()
 {
-	pFbx->Release();
-	delete pFbx;
+	//pFbx->Release();
+	//delete pFbx;
 }
