@@ -149,6 +149,7 @@
     <ClCompile Include="Engine\Transform.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mini.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScene.cpp" />
   </ItemGroup>
@@ -188,6 +189,7 @@
     <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Transform.h" />
     <ClInclude Include="Mini.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScene.h" />
   </ItemGroup>
