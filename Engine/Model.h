@@ -16,7 +16,7 @@ namespace Model
 	int Load(std::string filename);
 	void SetTransform(int hModel, Transform transform);
 	void Draw(int hModel_);
-	void Relase();
+	void Release();
 	//モデルのポインタをぶち込んでおくベクタ
 
 }

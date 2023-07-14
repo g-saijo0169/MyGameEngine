@@ -76,7 +76,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	//Camera‰Šú‰»
 	Camera::Initialize();
 
-	Model::Relase();
 
 	pRootJob = new RootJob;
 	pRootJob->Initialize();

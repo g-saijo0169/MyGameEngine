@@ -45,7 +45,7 @@ void Model::Draw(int hModel) {
 	modelList[hModel]->pFbx_->Draw(modelList[hModel]->transform_);
 }
 
-void Model::Relase()
+void Model::Release()
 {
 	bool isReffered = false; //QÆ‚³‚ê‚Ä‚éH
 	for (int i = 0; i < modelList.size(); i++)
