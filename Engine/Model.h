@@ -2,7 +2,7 @@
 //必要なインクルードを書く
 #include <string>
 #include <vector>
-#include "Engine/Fbx.h"
+#include "Fbx.h"
 
 namespace Model
 {
@@ -16,8 +16,8 @@ namespace Model
 	int Load(std::string filename);
 	void SetTransform(int hModel, Transform transform);
 	void Draw(int hModel_);
+	void Relase();
 	//モデルのポインタをぶち込んでおくベクタ
-	std::vector<ModelData*> modelList;
 
 }
 

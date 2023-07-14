@@ -1,18 +1,18 @@
 #include "Mini.h"
-#include "Engine/Fbx.h"
 #include "Engine/Input.h"
+#include "Engine/Model.h"
 
 //コンストラクタ
 Mini::Mini(GameObject* parent)
-	:GameObject(parent, "Mini"), pFbx(nullptr)
+	:GameObject(parent, "Mini"), hModel_(-1)
 {
 }
 
 //初期化
 void Mini::Initialize()
 {
-	pFbx = new Fbx;
-	pFbx->Load("Assets\\oden.fbx");
+	hModel_ = Model::Load("Assets/oden.fbx");
+	assert(hModel_ >= 0);
 
 	//transform_.position_.x = 2.0f;
 	//transform_.position_.y = 1.0f;
@@ -37,12 +37,11 @@ void Mini::Update()
 //描画
 void Mini::Draw()
 {
-	pFbx->Draw(transform_);
+	Model::SetTransform(hModel_, transform_);
+	Model::Draw(hModel_);
 }
 
 //開放
 void Mini::Release()
 {
-	pFbx->Release();
-	delete pFbx;
 }

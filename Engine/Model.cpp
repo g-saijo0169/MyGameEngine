@@ -1,4 +1,11 @@
 #include "Model.h"
+#include "Direct3D.h"
+
+
+namespace Model
+{
+	std::vector<ModelData*> modelList;
+}
 
 int Model::Load(std::string fileName)
 {
@@ -17,7 +24,6 @@ int Model::Load(std::string fileName)
 		}
 	}
 
-	modelList.push_back(pData);
 	if (pData->pFbx_ == nullptr) {
 		pData->pFbx_ = new Fbx;
 		pData->pFbx_->Load(fileName);
@@ -37,4 +43,26 @@ void Model::Draw(int hModel) {
 	//モデル番号はmodelListのインデックス
 	//modelList[hModel]->pFbx->Draw(メンバのトランスフォーム)
 	modelList[hModel]->pFbx_->Draw(modelList[hModel]->transform_);
+}
+
+void Model::Relase()
+{
+	bool isReffered = false; //参照されてる？
+	for (int i = 0; i < modelList.size(); i++)
+	{
+		for (int j = i + 1; j < modelList.size(); j++)
+		{
+			if (modelList[i]->pFbx_ == modelList[j]->pFbx_)
+			{
+				isReffered = true;
+				break;
+			}
+		}
+		if (isReffered == false)
+		{
+			SAFE_DELETE(modelList[i]->pFbx_)
+		}
+		SAFE_DELETE(modelList[i])
+	}
+	modelList.clear();
 }
