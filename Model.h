@@ -1,19 +1,23 @@
 #pragma once
 //必要なインクルードを書く
+#include <string>
+#include <vector>
+#include "Engine/Fbx.h"
 
 namespace Model
 {
 	struct ModelData
 	{
-		//FBX
-		//トランスフォーム
-		//ファイル名
+		Fbx* pFbx_;
+		Transform transform_;
+		std::string filename_;
+	 //トランスフォーム
 	};
+	int Load(std::string filename);
+	void SetTransform(int hModel, Transform transform);
+	void Draw(int hModel_);
 	//モデルのポインタをぶち込んでおくベクタ
+	std::vector<ModelData*> modelList;
+
 }
 
-int Model::Load(std::string fileName)
-{
-	//ファイル名のモデルを読み込んで、同じモデル名のモノがあったらそのモデル番号（配列のインデックス‐１）を返す関数
-	//同じ名前のモデルがなかったら、モデルを読み込んで、ベクタに追加
-}
