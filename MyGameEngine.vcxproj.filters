@@ -70,11 +70,11 @@
     <ClCompile Include="Engine\Model.cpp">
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="TestScene.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\SceneManager.cpp">
+      <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -117,14 +117,14 @@
     <ClInclude Include="Engine\Model.h">
       <Filter>ソース ファイル\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="PlayScene.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="TestScene.h">
       <Filter>ソース ファイル\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\SceneManager.h">
+      <Filter>ソース ファイル\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
