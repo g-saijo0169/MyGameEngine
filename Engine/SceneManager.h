@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "GameObject.h"
 
-//ƒQ[ƒ€‚ÌƒV[ƒ“‚ð—ñ‹“
+//
 enum SCENE_ID
 {
 	SCENE_ID_TEST = 0,

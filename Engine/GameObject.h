@@ -3,7 +3,9 @@
 #include "Transform.h"
 #include <list>
 #include <string>
-#
+
+using namespace std;
+
 
 class GameObject
 {
@@ -31,9 +33,13 @@ public:
 
 	void setPosition(XMFLOAT3 position);
 	XMFLOAT3 getPosition();
+	GameObject* FindChildObject(string _objName);
+	GameObject* GetRootJob();
+	GameObject* FindObject(string _objName);
 
+	//テンプレートの定義
 	template <class T>
-	GameObject* Instantiate(GameObject* parent)
+	T* Instantiate(GameObject* parent)
 	{
 		T* pObject;
 		pObject = new T(parent);

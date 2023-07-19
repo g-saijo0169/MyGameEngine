@@ -77,4 +77,45 @@ XMFLOAT3 GameObject::getPosition()
 	return transform_.position_;
 }
 
+GameObject* GameObject::FindChildObject(string _objName)
+{
+	if (_objName == this->objectName_)
+	{
+		return(this); //自分が_objNameのオブジェクトだった！
+	}
+	else
+	{
+		//for (auto itr = childlList_.begin(); itr != childlList_.end(); itr++)
+		for (auto itr: childList_)
+		{
+			GameObject* obj = itr->FindChildObject(_objName);
+			if (obj != nullptr)
+				return obj;
+		}
+	}
+	return nullptr;
+}
+
+
+/// <summary>
+/// 再帰呼び出しでRootJobを探してそのアドレスを返す関数
+/// </summary>
+/// <returns>RootJobのアドレス（GameObject　*　型）</returns>
+GameObject* GameObject::GetRootJob()
+{
+	if(pParent_ == nullptr)
+	return this;
+
+	return pParent_->GetRootJob();
+}
+
+GameObject* GameObject::FindObject(string _objName)
+{
+	//考えてみて
+	//自分からみて、ルートジョブを探して、そのルートジョブから全部の子をたどって_objNameを探す
+	return GetRootJob()->FindChildObject(_objName);
+
+
+}
+
 
