@@ -4,6 +4,7 @@
 
 //コンストラクタ
 PlayScene::PlayScene(GameObject* parent)
+	:GameObject(parent, "PlayScene")
 {
 }
 

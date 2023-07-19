@@ -17,7 +17,7 @@ void TestScene::Update()
 	if (Input::IsKey(DIK_RETURN))
 	{
 		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
-		if(pSceneManager)
+		//if(pSceneManager)
 		pSceneManager->ChangeScene(SCENE_ID_PLAY);
 	}
 }

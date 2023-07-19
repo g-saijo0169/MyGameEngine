@@ -1,13 +1,12 @@
 #include "GameObject.h"
 #include "Direct3D.h"
 
-GameObject::GameObject()
-	:pParent_(nullptr)
+GameObject::GameObject():pParent_(nullptr)
 {
 }
 
 GameObject::GameObject(GameObject* parent, const std::string& name)
-	:pParent_(nullptr),objectName_(name)
+	:pParent_(parent),objectName_(name)
 {
 	if (parent != nullptr)
 		this->transform_.pParent_ = &(parent->transform_);
