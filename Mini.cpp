@@ -1,6 +1,8 @@
 #include "Mini.h"
+#include "Engine/Fbx.h"
 #include "Engine/Input.h"
 #include "Engine/Model.h"
+#include "Engine/SphereCollider.h"
 
 //コンストラクタ
 Mini::Mini(GameObject* parent)
