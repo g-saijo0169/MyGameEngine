@@ -1,6 +1,6 @@
 #include "GameObject.h"
 #include "Direct3D.h"
-#include "GameObject.h"
+#include "SphereCollider.h"
 
 GameObject::GameObject():pParent_(nullptr)
 {
@@ -127,7 +127,7 @@ void GameObject::AddCollider(SphereCollider* pCollider)
 
 void GameObject::Collision(GameObject* pTarget)
 {
-	if (pTarget->pCollider_ == nullptr)
+	if (pTarget->pCollider_ == nullptr || pTarget == this)
 		return; //ターゲットにコライダーがアタッチされていない
 
 	//自分とターゲットの距離 <= R1+R2なら
@@ -140,13 +140,13 @@ void GameObject::Collision(GameObject* pTarget)
 	float dist = (transform_.position_.x - pTarget->transform_.position_.x) * (transform_.position_.x - pTarget->transform_.position_.x)
 		+ (transform_.position_.y - pTarget->transform_.position_.y) * (transform_.position_.y - pTarget->transform_.position_.y)
 		+ (transform_.position_.x - pTarget->transform_.position_.x) * (transform_.position_.z - pTarget->transform_.position_.z);
-	float rDist = (this->pCollider_->GetRadius() + pTarget->pCollision_->GetRadius()) * (this->pCollider_->GetRadius() + pTarger);
+	float rDist = (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius()) * (this->pCollider_->GetRadius() + pTarget->pCollider_->GetRadius());
 	// もし、自分のコライダーとターゲットがぶつかっていたら
 	//onCollision(pTarget)を呼び出す！
 		if (dist <= rDist)
 		{
-			//onCollision() を呼ぼう
-			double p = 0;
+			OnCollision(pTarget);
+			
 		}
 }
 

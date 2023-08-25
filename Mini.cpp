@@ -22,6 +22,9 @@ void Mini::Initialize()
 	transform_.scale_.x = 0.2f;
 	transform_.scale_.y = 0.2f;
 	transform_.scale_.z = 0.2f;
+
+	SphereCollider* collision = new SphereCollider(1.2f);
+	AddCollider(collision);
 }
 
 //çXêV

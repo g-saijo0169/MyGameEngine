@@ -79,7 +79,7 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SphereCollider.cpp">
+    <ClCompile Include="Engine\SphereCollider.cpp">
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -135,7 +135,7 @@
     <ClInclude Include="Enemy.h">
       <Filter>ソース ファイル\ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="SphereCollider.h">
+    <ClInclude Include="Engine\SphereCollider.h">
       <Filter>ソース ファイル\Engine</Filter>
     </ClInclude>
   </ItemGroup>
