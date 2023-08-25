@@ -1,7 +1,6 @@
 #include "SceneManager.h"
 #include "Model.h"
 #include "../TestScene.h"
-#include "../PlayScene.h"
 #include "Direct3D.h"
 
 SceneManager::SceneManager(GameObject* parent)
@@ -35,15 +34,10 @@ void SceneManager::Update()
 		//ロードしたデータを全削除
 		Model::Release();
 		//後片付け終了
-		switch (nextSceneID_)
-		{
-		case SCENE_ID_TEST:
+
 			Instantiate<TestScene>(this);
-			break;
-		case SCENE_ID_PLAY:
-			Instantiate<PlayScene>(this);
-			break;
-		}
+		
+
 		currentSceneID_ = nextSceneID_;
 	}
 
@@ -64,6 +58,5 @@ void SceneManager::Release()
 /// <param name="_next"></param>
 void SceneManager::ChangeScene(SCENE_ID _next)
 {
-
 	nextSceneID_ = _next;
 }
