@@ -4,6 +4,7 @@
 #include "Quad.h"
 #include "Camera.h"
 #include "Texture.h"
+#include <DirectXCollision.h>
 
 
 
@@ -324,14 +325,14 @@ void Fbx::RayCast(RayCastData& rayData)
 			int i1 = ppIndex_[material][poly * 3 + 1];
 			int i2 = ppIndex_[material][poly * 3 + 2];
 
-			XMFLOAT3 v0 = pVertices_[i0].position;
-			XMFLOAT3 v1 = pVertices_[i1].position;
-			XMFLOAT3 v2 = pVertices_[i2].position;
+			XMVECTOR v0 = pVertices_[i0].position;
+			XMVECTOR v1 = pVertices_[i1].position;
+			XMVECTOR v2 = pVertices_[i2].position;
 
-			XMVECTOR start = rayData.start;
-			XMVECTOR dir = rayData.dir;
+			XMVECTOR start = XMLoadFloat4(&rayData.start) ;
+			XMVECTOR dir = XMLoadFloat4(&rayData.dir);
 			float dist;
-			rayData.hit = TriangleTest::Intesect();
+			rayData.hit = TriangleTests::Intersects(start,dir,v0,v1,v2,dist);
 
 			if (rayData.hit)
 			{
