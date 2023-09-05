@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/GameObject.h"
+#include "windows.h"
 
 
 namespace {
@@ -24,6 +25,11 @@ class Stage : public GameObject
         int height;
 
     }table_[XSIZE][ZSIZE];
+
+    int mode_;      //0:上げる 1:下げる 2:種類を変える
+    int select_;    //種類
+
+
 public:
    
     //コンストラクタ
@@ -43,6 +49,9 @@ public:
 
     //開放
     void Release() override;
+
+    BOOL DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
+
 
     void SetBlock(int _x, int _z, BLOCKTYPE _type);
     void SetBlockHeght(int _x, int _z, int _height);
