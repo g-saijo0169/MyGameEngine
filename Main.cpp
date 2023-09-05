@@ -10,6 +10,7 @@
 
 #include "resource.h"
 #include "Stage.h"
+#include "Engine/Input.cpp"
 
 #pragma comment(lib, "winmm.lib")
 
@@ -97,7 +98,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	pRootJob = new RootJob(nullptr);
 	pRootJob->Initialize();
 
-
+	//Fbx* pFbx = new Fbx;
+	//pFbx->Load("Assets/BoxBrick.fbx");
+	//RayCastData data;
+	//data.start = XMFLOAT4(0, 5, 0, 0);
+	//data.dir = XMFLOAT4(0, -1, 0, 0);
 
 	HWND hDlg = CreateDialog(hInstance, MAKEINTRESOURCE(IDD_DIALOG1), hWnd, (DLGPROC)DialogProc);
 

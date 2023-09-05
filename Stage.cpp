@@ -107,10 +107,10 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"ëêå¥");
         SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"çªín");
         SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"êÖ");
-        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, 0);
-
+        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_SETCURSEL, 0, 0);
 
         return TRUE;
+
     }
     return FALSE;
 }

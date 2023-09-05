@@ -20,6 +20,15 @@ namespace Input
 	bool IsKeyUp(int keyCode);
 	void Release();
 
-	DirectX::XMVECTOR GetMousePosition();
-	void SetMousePosition(int x, int y);
+	
+
+	bool IsMouseButton(int buttonCode);
+	bool IsMouseButtonDown(int buttonCode);
+	bool IsMouseButtonUp(int buttonCode);
+	XMFLOAT3 GetMousePosition();
+	XMFLOAT3 GetMouseMove();
+
+	/*DirectX::XMVECTOR GetMousePosition();
+	void SetMousePosition(int x, int y);*/
+
 };
