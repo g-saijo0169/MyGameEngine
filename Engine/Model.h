@@ -17,6 +17,8 @@ namespace Model
 	void SetTransform(int hModel, Transform transform);
 	void Draw(int hModel_);
 	void Release();
+
+	void RayCast(int hModel, RayCastData& rayData);
 	//モデルのポインタをぶち込んでおくベクタ
 
 }
