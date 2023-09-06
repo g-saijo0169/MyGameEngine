@@ -10,7 +10,6 @@
 
 #include "resource.h"
 #include "Stage.h"
-#include "Engine/Input.cpp"
 
 #pragma comment(lib, "winmm.lib")
 

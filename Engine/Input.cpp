@@ -14,7 +14,7 @@ namespace Input
 	DIMOUSESTATE prevMouseState_;
 	XMFLOAT3 mousePosition_;
 
-	XMVECTOR mousePosition;
+
 	void Initialize(HWND hWnd)
 	{
 		DirectInput8Create(GetModuleHandle(nullptr),
@@ -35,7 +35,7 @@ namespace Input
 		pKeyDevice->GetDeviceState(sizeof(keyState), &keyState);
 
 		pMouseDevice_->Acquire();
-		memcp(&prevMouseState_, mouseState_,)
+		memcpy(&prevMouseState_, &mouseState_, sizeof(mouseState_));
 
 	}
 
@@ -80,12 +80,17 @@ namespace Input
 	
 	bool IsMouseButton(int buttonCode)
 	{
-		return true;
+		if (mouseState_.rgbButtons[buttonCode] & 0x80)
+		{
+			return true;
+
+		}
+		return false;
 	}
 
 	bool IsMouseButtonDown(int buttonCode)
 	{
-		bool IsMouseButton(int buttonCode) && !(prevMouseState.rgbButton[])
+		if (IsMouseButton(buttonCode) && !(prevMouseState_.rgbButtons[buttonCode] & 0x80))
 		{
 			return true;
 		}
@@ -94,7 +99,7 @@ namespace Input
 	
 	bool IsMouseButtonUp(int buttonCode)
 	{
-		bool IsMouseButton(int buttonCode) && (prevMouseState.rgbButton[])
+		if (!IsMouseButton(buttonCode) && (prevMouseState_.rgbButtons[buttonCode] & 0x80))
 		{
 			return true;
 		}
@@ -103,20 +108,20 @@ namespace Input
 
 	XMFLOAT3 GetMousePosition()
 	{
-		return mousePosition;
+		return mousePosition_;
 	}
 
 	XMFLOAT3 GetMouseMove()
 	{
-		XMFLOAT3 result = XMFLOAT3((float)mouseState.X|(float)mouseState.Y|(float)mouseState. | Z,);
-			return result;
+		XMFLOAT3 result = XMFLOAT3((float)mouseState_.lX, (float)mouseState_.lY, (float)mouseState_.lZ);
+		return result;
 	}
 
 	void SetMousePosition(int x, int y)
 	{
-		mousePosition.x = x;
-		mousePosition.y = y;
-			std::string resStr = std::to_string(x) + "," + std::to_string(y);
+		mousePosition_.x = x;
+		mousePosition_.y = y;
+		std::string resStr = std::to_string(x) + "," + std::to_string(y);
 		OutputDebugString(resStr.c_str());
 
 	}
