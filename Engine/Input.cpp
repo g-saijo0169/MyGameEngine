@@ -37,6 +37,8 @@ namespace Input
 		pMouseDevice_->Acquire();
 		memcpy(&prevMouseState_, &mouseState_, sizeof(mouseState_));
 
+		pMouseDevice_->GetDeviceState(sizeof(mouseState_), &mouseState_);
+
 	}
 
 	bool IsKey(int keyCode)

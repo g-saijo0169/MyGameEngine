@@ -149,7 +149,7 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* mesh)
 				//3’¸“_•ª
 				for (DWORD vertex = 0; vertex < 3; vertex++)
 				{
-					index[count] = mesh->GetPolygonVertex(poly, vertex);
+					ppIndex_[i][count] = mesh->GetPolygonVertex(poly, vertex);
 					count++;
 				}
 			}
@@ -164,7 +164,7 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* mesh)
 		bd.MiscFlags = 0;
 
 		D3D11_SUBRESOURCE_DATA InitData;
-		InitData.pSysMem = index.data();
+		InitData.pSysMem = ppIndex_[i];
 		InitData.SysMemPitch = 0;
 		InitData.SysMemSlicePitch = 0;
 
@@ -330,8 +330,9 @@ void Fbx::RayCast(RayCastData& rayData)
 			XMVECTOR v2 = pVertices_[i2].position;
 
 			XMVECTOR start = XMLoadFloat4(&rayData.start) ;
-			XMVECTOR dir = XMLoadFloat4(&rayData.dir);
-			float dist;
+			XMVECTOR dir = XMVector3Normalize(XMLoadFloat4(&rayData.dir));
+
+			
 			rayData.hit = TriangleTests::Intersects(start,dir,v0,v1,v2,rayData.dist);
 
 			if (rayData.hit)

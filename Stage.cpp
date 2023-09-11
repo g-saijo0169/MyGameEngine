@@ -64,6 +64,10 @@ void Stage::Initialize()
 //更新
 void Stage::Update()
 {
+    if (!Input::IsMouseButtonDown(0))
+    {
+        return;
+    }
     float w = (float)(Direct3D::scrWidth/2.0f);//画面サイズの半分
     float h = (float)(Direct3D::scrHeight/2.0f);//画面の高さの半分
     //Offsetx,yは0
