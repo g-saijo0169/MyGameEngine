@@ -1,6 +1,6 @@
 #include "Stage.h"
 #include "Engine/Model.h"
-//#include "resource.h"
+#include "resource.h"
 #include "Engine/Direct3D.h"
 #include "Engine/Camera.h"
 #include "Engine/Input.h"
@@ -124,8 +124,16 @@ void Stage::Update()
                 //⑥　レイが当たったらブレークポイントで止める
                 if (data.hit)
                 {
-                    table_[x][z].height++;
-                    break;
+                    mode_ = 0;
+                        switch (mode_)
+                        {
+                        case 0:
+                            table_[x][z].height++;
+                            break;
+                        case 1:
+                            table_[x][z].height--;
+                        };
+                    
                 }
             }
         }
@@ -163,23 +171,23 @@ void Stage::Release()
 {
 }
 
-//BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp) 
-//{
-//    switch (msg)
-//    {
-//    //ダイアログできた
-//    case WM_INITDIALOG:
-//        SendMessage(GetDlgItem(hDlg, IDC_RADIO_UP), BM_SETCHECK,BST_CHECKED, 0);
-//
-//        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"デフォルト");
-//        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"レンガ");
-//        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"草原");
-//        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"砂地");
-//        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"水");
-//        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_SETCURSEL, 0, 0);
-//
-//        return TRUE;
-//
-//    }
-//    return FALSE;
-//}
+BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp) 
+{
+    switch (msg)
+    {
+    //ダイアログできた
+    case WM_INITDIALOG:
+        SendMessage(GetDlgItem(hDlg, IDC_RADIO_UP), BM_SETCHECK,BST_CHECKED, 0);
+
+        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"デフォルト");
+        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"レンガ");
+        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"草原");
+        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"砂地");
+        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"水");
+        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_SETCURSEL, 0, 0);
+
+        return TRUE;
+
+    }
+    return FALSE;
+}
