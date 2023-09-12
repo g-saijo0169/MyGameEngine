@@ -1,9 +1,10 @@
 #include "Stage.h"
 #include "Engine/Model.h"
-#include "resource.h"
+//#include "resource.h"
 #include "Engine/Direct3D.h"
 #include "Engine/Camera.h"
 #include "Engine/Input.h"
+#include "Engine/Fbx.h"
 
 void Stage::SetBlock(int _x, int _z, BLOCKTYPE _type)
 {
@@ -22,9 +23,10 @@ Stage::Stage(GameObject* parent)
     for (int i = 0; i < MODEL_NUM; i++) {
         hModel_[i] = -1;
     }
-    for (int z = 0; z < XSIZE; z++) {
-        for (int x = 0; x < ZSIZE; x++) {
+    for (int z = 0; z < ZSIZE; z++) {
+        for (int x = 0; x < XSIZE; x++) {
             SetBlock(x, z, DEFAULT);
+            SetBlockHeght(x, z, 0);
         }
     }
     
@@ -54,11 +56,12 @@ void Stage::Initialize()
     }
  
     //tableにブロックのタイプをセットしてやろう！
-    for (int z = 0; z < XSIZE; z++) {
-        for (int x = 0; x < ZSIZE; x++) {
-           SetBlock(x, z, (BLOCKTYPE)(z%5));
+    for (int z = 0; z < ZSIZE; z++) {
+        for (int x = 0; x < XSIZE; x++) {
+           SetBlock(x, z, (BLOCKTYPE)(0));
+
         }
-    }
+    }SetBlockHeght(0, 0, 0);
 }
 
 //更新
@@ -66,6 +69,7 @@ void Stage::Update()
 {
     if (!Input::IsMouseButtonDown(0))
     {
+        
         return;
     }
     float w = (float)(Direct3D::scrWidth/2.0f);//画面サイズの半分
@@ -77,7 +81,7 @@ void Stage::Update()
     {
         w,  0,   0,    0,
         0, -h,   0,    0,
-        0,  0, 1 - 0,  0,
+        0,  0,   1,    0,
         w,  h,   0,    1
     };
     //ビューポート
@@ -86,22 +90,18 @@ void Stage::Update()
     XMMATRIX invProj = XMMatrixInverse(nullptr, Camera::GetProjectionMatrix());
     //ビュー変換
     XMMATRIX invView = XMMatrixInverse(nullptr, Camera::GetViewMatrix());
-
     XMFLOAT3 mousePosFront = Input::GetMousePosition();
     mousePosFront.z = 0.0f;
     XMFLOAT3 mousePosBack = Input::GetMousePosition();
     mousePosBack.z = 1.0f;
-
     //①　mousePosFrontをベクトルに変換
-    XMVECTOR vMousePosFront = XMLoadFloat3(&mousePosFront);
-
-    //②　①にinvVP,intPrj,invViewをかける
-    vMousePosFront = XMVector3TransformCoord(vMousePosFront,invVP * invProj * invView );
-
+    XMVECTOR vMouseFront = XMLoadFloat3(&mousePosFront);
+    //②　①にinvVP、invPrj、invViewをかける
+    vMouseFront = XMVector3TransformCoord(vMouseFront, invVP * invProj * invView);
     //③　mousePosBackをベクトルに変換
-    XMVECTOR vMousePosBack = XMLoadFloat3(&mousePosBack);
-    //④　③にinvVP,invPrj,invViewをかける
-    vMousePosBack = XMVector3TransformCoord(vMousePosBack, invVP * invProj * invView);
+    XMVECTOR vMouseBack = XMLoadFloat3(&mousePosBack);
+    //④　③にinvVP、invPrj、invViewをかける
+    vMouseBack = XMVector3TransformCoord(vMouseBack, invVP * invProj * invView);
 
     for (int x = 0; x < 15; x++)
     {
@@ -109,17 +109,16 @@ void Stage::Update()
         {
             for (int y = 0; y < table_[x][z].height + 1; y++)
             {
-                //⑤　②から④に向かってレイを打つ（とりあえずモデル番号はhModel_[0])
+                //⑤　②から④に向かってレイをうつ（とりあえずモデル番号はhModel_[0]）
                 RayCastData data;
-                XMStoreFloat4(&data.start, vMousePosFront);
-                XMStoreFloat4(&data.dir, vMousePosBack - vMousePosFront);
+                XMStoreFloat4(&data.start, vMouseFront);
+                XMStoreFloat4(&data.dir, vMouseBack - vMouseFront);
                 Transform trans;
-
                 trans.position_.x = x;
                 trans.position_.y = y;
                 trans.position_.z = z;
-
                 Model::SetTransform(hModel_[0], trans);
+
                 Model::RayCast(hModel_[0], data);
 
                 //⑥　レイが当たったらブレークポイントで止める
@@ -141,7 +140,7 @@ void Stage::Draw()
     {
         for (int z = 0; z < 15; z++)
         {
-            for (int y = 0; y < 15; y++)
+            for (int y = 0; y <=  table_[x][z].height; y++)
             {
                 //table[x][z]
                 int type = table_[x][z].type;
@@ -164,23 +163,23 @@ void Stage::Release()
 {
 }
 
-BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp) 
-{
-    switch (msg)
-    {
-    //ダイアログできた
-    case WM_INITDIALOG:
-        SendMessage(GetDlgItem(hDlg, IDC_RADIO_UP), BM_SETCHECK,BST_CHECKED, 0);
-
-        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"デフォルト");
-        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"レンガ");
-        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"草原");
-        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"砂地");
-        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"水");
-        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_SETCURSEL, 0, 0);
-
-        return TRUE;
-
-    }
-    return FALSE;
-}
+//BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp) 
+//{
+//    switch (msg)
+//    {
+//    //ダイアログできた
+//    case WM_INITDIALOG:
+//        SendMessage(GetDlgItem(hDlg, IDC_RADIO_UP), BM_SETCHECK,BST_CHECKED, 0);
+//
+//        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"デフォルト");
+//        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"レンガ");
+//        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"草原");
+//        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"砂地");
+//        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"水");
+//        SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_SETCURSEL, 0, 0);
+//
+//        return TRUE;
+//
+//    }
+//    return FALSE;
+//}

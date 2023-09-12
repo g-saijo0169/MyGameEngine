@@ -2,6 +2,7 @@
 
 #include <dInput.h>
 #include <DirectXMath.h>
+#include "Direct3D.h"
 
 #pragma comment(lib, "dxguid.lib")
 #pragma comment(lib, "dInput8.lib")

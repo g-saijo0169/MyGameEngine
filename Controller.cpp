@@ -7,7 +7,7 @@ Controller::Controller(GameObject* parent)
     :GameObject(parent, "Controller")
 {
     transform_.position_.x = 7.0f;
-    transform_.position_.z = 0.0f;
+    transform_.position_.z = 7.0f;
 
     transform_.rotate_.x = 45.0f;
 
@@ -100,7 +100,7 @@ void Controller::Update()
     XMStoreFloat3(&transform_.position_, vPos);
 
     //ÉJÉÅÉâ
-    XMVECTOR vCam = XMVectorSet(0, 5, -10, 0);     //é©éBÇËñ_ópà”
+    XMVECTOR vCam = XMVectorSet(0, 0, -10, 0);     //é©éBÇËñ_ópà”
     vCam = XMVector3TransformCoord(vCam, mRotateX * mRotateY);  //é©éBÇËñ_âÒì]
 
     Camera::SetPosition(vPos + vCam);
