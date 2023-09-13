@@ -132,6 +132,10 @@ void Stage::Update()
                             break;
                         case 1:
                             table_[x][z].height--;
+                            break;
+                        case 2:
+                            table_[x][z].type;
+                            break;
                         };
                     
                 }
