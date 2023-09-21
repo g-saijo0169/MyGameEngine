@@ -103,6 +103,11 @@ void Stage::Update()
     //④　③にinvVP、invPrj、invViewをかける
     vMouseBack = XMVector3TransformCoord(vMouseBack, invVP * invProj * invView);
 
+    float distance = 100000; //距離を入れておく変数
+    int posX = -1;
+    int posZ = -1;
+
+
     for (int x = 0; x < 15; x++)
     {
         for (int z = 0; z < 15; z++)
@@ -124,24 +129,34 @@ void Stage::Update()
                 //⑥　レイが当たったらブレークポイントで止める
                 if (data.hit)
                 {
-                    mode_ = 0;
-                        switch (mode_)
-                        {
-                        case 0:
-                            table_[x][z].height++;
-                            break;
-                        case 1:
-                            table_[x][z].height--;
-                            break;
-                        case 2:
-                            table_[x][z].type;
-                            break;
-                        };
-                    
+                    if (distance > data.dist) {
+                        distance = data.dist;
+                        posX = x;
+                        posZ = z;
+                    }
+                    break;
                 }
             }
         }
     }
+
+
+
+    switch (mode_)
+    {
+    case 0:
+        if(table_[posX][posZ].height < 15)
+        table_[posX][posZ].height++;
+        break;
+    case 1:
+        if (table_[posX][posZ].height > 0)
+        table_[posX][posZ].height--;
+        break;
+    case 2:
+        table_[posX][posZ].type = select_;
+        break;
+    };
+   
 
 }
 
@@ -191,6 +206,24 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_SETCURSEL, 0, 0);
 
         return TRUE;
+
+    case WM_COMMAND:
+        switch (LOWORD(wp))
+        {
+        case IDC_RADIO_UP:
+            mode_ = 0;
+            break;
+        case IDC_RADIO_DOWN:
+            mode_ = 1;
+            break;
+        case IDC_RADIO_CHANGE:
+            mode_ = 2;
+            break;
+        case IDC_COMBO:
+            select_ = (int)SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_GETCURSEL, 0, 0);
+            break;
+        }
+
 
     }
     return FALSE;
