@@ -56,3 +56,4 @@ public:
     void SetBlock(int _x, int _z, BLOCKTYPE _type);
     void SetBlockHeght(int _x, int _z, int _height);
 };
+
