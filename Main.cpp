@@ -207,6 +207,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			break;
 		case ID_MENU_SAVE:
 			OutputDebugString("Save FILE");
+			break;
 			//ファイル保存ダイアログで名前を決める
 			
 			//決めたファイル名でセーブを実行

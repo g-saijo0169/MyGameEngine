@@ -222,10 +222,45 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         case IDC_COMBO:
             select_ = (int)SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_GETCURSEL, 0, 0);
             break;
-
+            
         }
 
 
     }
     return FALSE;
+}
+
+void Stage::Save()
+{
+    char fileName[MAX_PATH] = "無題.map";         //ファイル名を入れる変数
+
+    //「ファイルを保存」ダイアログの設定
+    OPENFILENAME ofn;                               //名前をつけて保存ダイアログの設定用構造体
+    ZeroMemory(&ofn, sizeof(ofn));                  //
+    ofn.lStructSize = sizeof(OPENFILENAME);         //
+    ofn.lpstrFilter = TEXT("マップデータ(*.map)\0*.map\0")//
+        TEXT("すべてのファイル(*.*)\0*.*\0\0");
+    ofn.lpstrFile = fileName;
+    ofn.nMaxFile = MAX_PATH;
+    ofn.Flags = OFN_OVERWRITEPROMPT;
+    ofn.lpstrDefExt = "map";
+
+
+    //「ファイルを保存」
+    BOOL selFile;
+    selFile = GetSaveFileName(&ofn);
+
+    //キャンセルしたら中断
+    if (selFile == FALSE) return;
+
+    //セーブのルーチン
+    HANDLE hFile;
+    hFile = CreateFile(
+        fileName,                 //ファイル名
+        GENERIC_WRITE,           //アクセスモード（書き込み用）
+        0,                      //共有（なし）
+        NULL,                   //セキュリティ属性（継承しない）
+        CREATE_ALWAYS,           //作成方法
+        FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
+        NULL);                  //拡張属性（なし）
 }
