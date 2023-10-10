@@ -263,4 +263,8 @@ void Stage::Save()
         CREATE_ALWAYS,           //作成方法
         FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
         NULL);                  //拡張属性（なし）
+
+    std::string data = "";
+
+
 }
