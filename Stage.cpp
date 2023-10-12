@@ -269,8 +269,8 @@ void Stage::Save()
     DWORD dwBytes = 0;                  //書き込み位置
     WriteFile(
         hFile,                          //ファイルハンドル
-        data.c_str(),                   //保存するデータ（文字列）
-        (DWORD)strlen(data.c_str()),    //書き込む文字数
+        ,                   //保存するデータ（文字列）
+        12,    //書き込む文字数
         &dwBytes,                       //書き込んだサイズを入れる変数
         NULL);                          //オーバーラップド構造体（今回は使わない）
 
