@@ -52,6 +52,7 @@ public:
 
     BOOL DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp);
     void Save();
+    void Load();
 
 
     void SetBlock(int _x, int _z, BLOCKTYPE _type);
