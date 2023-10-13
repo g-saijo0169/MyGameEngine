@@ -264,19 +264,21 @@ void Stage::Save()
         FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
         NULL);                  //拡張属性（なし）
 
-    std::string data = "";
+
+    
+    std::string data = to_string();
 
     DWORD dwBytes = 0;                  //書き込み位置
     WriteFile(
         hFile,                          //ファイルハンドル
-        ,                   //保存するデータ（文字列）
-        12,    //書き込む文字数
+        data.c_str(),                   //保存するデータ（文字列）
+        (DWORD)strlen(data.c_str()),    //書き込む文字数
         &dwBytes,                       //書き込んだサイズを入れる変数
         NULL);                          //オーバーラップド構造体（今回は使わない）
 
     CloseHandle(hFile);
 }
 
-void Stage::Load()
-{
-}
+//void Stage::Load()
+//{
+//}
