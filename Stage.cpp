@@ -265,14 +265,31 @@ void Stage::Save()
         NULL);                  //拡張属性（なし）
 
 
-    
-    std::string data = to_string();
+        //std::string Stagedata = std::to_string(XSIZE) + "," + std::to_string(ZSIZE) + "\n"; // ステージのサイズを追加
+    std::string Stagedata;
+
+    for (int z = 0; z < ZSIZE; z++)
+    {
+        for (int x = 0; x < XSIZE; x++)
+        {
+            // ブロックの高さと種類を文字列に変換してコンマで区切って連結
+            Stagedata += std::to_string(table_[x][z].height) + "," + std::to_string(table_[x][z].height);
+
+            // XSIZE - 1 のときはコンマを追加
+            if (x < XSIZE - 1)
+                Stagedata += ",";
+        }
+
+        // ZSIZE - 1 のときは改行文字を追加
+        if (z < ZSIZE - 1)
+            Stagedata += "\n";
+    }
 
     DWORD dwBytes = 0;                  //書き込み位置
     WriteFile(
         hFile,                          //ファイルハンドル
-        data.c_str(),                   //保存するデータ（文字列）
-        (DWORD)strlen(data.c_str()),    //書き込む文字数
+        Stagedata.c_str(),                   //保存するデータ（文字列）
+        (DWORD)strlen(Stagedata.c_str()),    //書き込む文字数
         &dwBytes,                       //書き込んだサイズを入れる変数
         NULL);                          //オーバーラップド構造体（今回は使わない）
 
