@@ -204,6 +204,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			break;
 		case ID_MENU_OPEN:
 			OutputDebugString("open FILE");
+			((Stage*)pRootJob->FindObject("Stage"))->Load();
 			break;
 		case ID_MENU_SAVE:
 			OutputDebugString("Save FILE");
