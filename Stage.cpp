@@ -328,7 +328,7 @@ void Stage::Load()
         FILE_ATTRIBUTE_NORMAL,  //属性とフラグ（設定なし）
         NULL);                  //拡張属性（なし）
 
-    
+    std::string LoadData;
 
     //ファイルのサイズを取得
     DWORD fileSize = GetFileSize(hFile, NULL);
