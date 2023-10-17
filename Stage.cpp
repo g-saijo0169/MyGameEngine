@@ -273,7 +273,7 @@ void Stage::Save()
         for (int x = 0; x < XSIZE; x++)
         {
             // ブロックの高さと種類を文字列に変換してコンマで区切って連結
-            Stagedata += std::to_string(table_[x][z].height) + "," + std::to_string(table_[x][z].height);
+            Stagedata += std::to_string(table_[x][z].height) + "," + std::to_string(table_[x][z].type) + " ";
 
             // XSIZE - 1 のときはコンマを追加
             if (x < XSIZE - 1)
