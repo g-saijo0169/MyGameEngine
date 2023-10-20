@@ -265,31 +265,44 @@ void Stage::Save()
         NULL);                  //拡張属性（なし）
 
 
-        //std::string Stagedata = std::to_string(XSIZE) + "," + std::to_string(ZSIZE) + "\n"; // ステージのサイズを追加
-    std::string Stagedata;
+    //std::string Stagedata = std::to_string(XSIZE) + "," + std::to_string(ZSIZE) + "\n"; // ステージのサイズを追加
+    //std::string Stagedata;
+    //for (int x = 0; x < XSIZE; x++)
+    //{
+    //    for (int z = 0; z < ZSIZE; z++)
+    //    {
+    //        // ブロックの高さと種類を文字列に変換してコンマで区切って連結
+    //        Stagedata += std::to_string(table_[x][z].height) + "," + std::to_string(table_[x][z].type) + " ";
 
-    for (int z = 0; z < ZSIZE; z++)
+    //        // XSIZE - 1 のときはコンマを追加
+    //        if (z < ZSIZE - 1)
+    //            Stagedata += ",";
+    //    }
+
+    //    // ZSIZE - 1 のときは改行文字を追加
+    //    if (x < XSIZE - 1)
+    //        Stagedata += "\n";
+    //}
+
+    std::string mapData;
+
+    for (int x = 0; x < XSIZE; x++)
     {
-        for (int x = 0; x < XSIZE; x++)
+        for (int z = 0; z < ZSIZE; z++)
         {
-            // ブロックの高さと種類を文字列に変換してコンマで区切って連結
-            Stagedata += std::to_string(table_[x][z].height) + "," + std::to_string(table_[x][z].type) + " ";
-
-            // XSIZE - 1 のときはコンマを追加
-            if (x < XSIZE - 1)
-                Stagedata += ",";
+            string map = std::to_string(table_[x][z].height);
+            mapData += map;
+            if (x != 14 || z != 14) {  // マップの最後でない場合、カンマを追加
+                mapData += ",";
+            }
         }
-
-        // ZSIZE - 1 のときは改行文字を追加
-        if (z < ZSIZE - 1)
-            Stagedata += "\n";
     }
 
     DWORD dwBytes = 0;                  //書き込み位置
     WriteFile(
         hFile,                          //ファイルハンドル
-        Stagedata.c_str(),                   //保存するデータ（文字列）
-        (DWORD)strlen(Stagedata.c_str()),    //書き込む文字数
+        mapData.c_str(),                   //保存するデータ（文字列）
+        (DWORD)strlen(mapData.c_str()),    //書き込む文字数
         &dwBytes,                       //書き込んだサイズを入れる変数
         NULL);                          //オーバーラップド構造体（今回は使わない）
 
@@ -345,6 +358,23 @@ void Stage::Load()
         fileSize,  //読み込むサイズ
         &dwBytes,  //読み込んだサイズ
         NULL);     //オーバーラップド構造体（今回は使わない）
+
+    char* nextToken;
+    char* token = strtok_s(Data, ",", &nextToken); // カンマで文字列を分割
+
+    int count = 0;
+    while (token != NULL)
+    {
+        if (count >= 15 * 15) {
+            break;  // データが多すぎる場合は終了
+        }
+
+        int height_ = atoi(token);
+        table_[count / 15][count % 15].height = height_;
+
+        token = strtok_s(NULL, ",", &nextToken); // 次のトークンを取得
+        count++;
+    }
 
     CloseHandle(hFile);
 }
