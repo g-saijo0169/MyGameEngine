@@ -7,6 +7,7 @@
 namespace {
     const int MODEL_NUM = 5;
     const int XSIZE{ 15 };
+    const int YSIZE{ 15 };
     const int ZSIZE{ 15 };
     enum BLOCKTYPE
     {

@@ -106,6 +106,7 @@ void Stage::Update()
 
     float distance = 100000; //‹——£‚ð“ü‚ê‚Ä‚¨‚­•Ï”
     int posX = -1;
+    int posY = -1;
     int posZ = -1;
 
 
@@ -133,6 +134,7 @@ void Stage::Update()
                     if (distance > data.dist) {
                         distance = data.dist;
                         posX = x;
+                        posY = y;
                         posZ = z;
                     }
                     break;
@@ -155,6 +157,16 @@ void Stage::Update()
         table_[posX][posZ].type = select_;
         break;
     case 3:
+        for (int x = 0;  x < 15; x++)
+        {
+            for (int z = 0; z < 15; z++)
+            {
+                if(table_[posX][posZ].height == table_[x][z].height)
+                    //if(table_[posX][posZ].type == table_[x][z].type)
+                table_[x][z].type = select_;
+            }
+        }
+        break;
     };
    
 
