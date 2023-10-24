@@ -154,6 +154,7 @@ void Stage::Update()
     case 2:
         table_[posX][posZ].type = select_;
         break;
+    case 3:
     };
    
 
@@ -204,6 +205,8 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_ADDSTRING, 0, (LPARAM)"êÖ");
         SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_SETCURSEL, 0, 0);
 
+        SendMessage(GetDlgItem(hDlg, IDC_RADIO_FILL), BM_SETCHECK, BST_UNCHECKED, 0);
+
         return TRUE;
 
     case WM_COMMAND:
@@ -218,7 +221,9 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         case IDC_RADIO_CHANGE:
             mode_ = 2;
             break;
-            case IDC_
+        case IDC_RADIO_FILL:
+            mode_ = 3;
+            break;
         case IDC_COMBO:
             select_ = (int)SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_GETCURSEL, 0, 0);
             break;
