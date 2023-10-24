@@ -7,7 +7,6 @@
 #include "Engine/Fbx.h"
 
 
-
 void Stage::SetBlock(int _x, int _z, BLOCKTYPE _type)
 {
     table_[_x][_z].type = _type;
@@ -219,6 +218,7 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         case IDC_RADIO_CHANGE:
             mode_ = 2;
             break;
+            case IDC_
         case IDC_COMBO:
             select_ = (int)SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_GETCURSEL, 0, 0);
             break;
