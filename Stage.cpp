@@ -73,6 +73,10 @@ void Stage::Update()
         
         return;
     }
+    if (!Input::IsMouseButton(0))
+    {
+        return;
+    }
     float w = (float)(Direct3D::scrWidth/2.0f);//画面サイズの半分
     float h = (float)(Direct3D::scrHeight/2.0f);//画面の高さの半分
     //Offsetx,yは0
@@ -143,27 +147,48 @@ void Stage::Update()
         }
     }
 
+    int current = table_[posX][posZ].type;
+
     switch (mode_)
     {
+        //  地形を上げる
     case 0:
         if(table_[posX][posZ].height < 15)
         table_[posX][posZ].height++;
         break;
+        //  地形を下げる
     case 1:
         if (table_[posX][posZ].height > 0)
         table_[posX][posZ].height--;
         break;
+        //  種類を変える
     case 2:
         table_[posX][posZ].type = select_;
         break;
+        //  塗りつぶし
     case 3:
         for (int x = 0;  x < 15; x++)
         {
             for (int z = 0; z < 15; z++)
             {
-                if(table_[posX][posZ].height == table_[x][z].height)
-                    //if(table_[posX][posZ].type == table_[x][z].type)
-                table_[x][z].type = select_;
+                if (table_[posX][posZ].height == table_[x][z].height)
+                {
+                    if (current == table_[x][z].type)
+                    table_[x][z].type = select_;
+
+                }
+                
+            }
+        }
+        break;
+        //  全消し
+    case 4:
+        for (int x = 0; x < 15; x++)
+        {
+            for (int z = 0; z < 15; z++)
+            {
+                table_[x][z].height = 0;
+                table_[x][z].type = 0;
             }
         }
         break;
@@ -218,6 +243,7 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
         SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_SETCURSEL, 0, 0);
 
         SendMessage(GetDlgItem(hDlg, IDC_RADIO_FILL), BM_SETCHECK, BST_UNCHECKED, 0);
+        SendMessage(GetDlgItem(hDlg, IDC_RADIO_DELETE), BM_SETCHECK, BST_UNCHECKED, 0);
 
         return TRUE;
 
@@ -235,6 +261,9 @@ BOOL Stage::DialogProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
             break;
         case IDC_RADIO_FILL:
             mode_ = 3;
+            break;
+        case IDC_RADIO_DELETE:
+            mode_ = 4;
             break;
         case IDC_COMBO:
             select_ = (int)SendMessage(GetDlgItem(hDlg, IDC_COMBO), CB_GETCURSEL, 0, 0);
