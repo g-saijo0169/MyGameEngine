@@ -73,10 +73,7 @@ void Stage::Update()
         
         return;
     }
-    if (!Input::IsMouseButton(0))
-    {
-        return;
-    }
+
     float w = (float)(Direct3D::scrWidth/2.0f);//‰æ–ÊƒTƒCƒY‚Ì”¼•ª
     float h = (float)(Direct3D::scrHeight/2.0f);//‰æ–Ê‚Ì‚‚³‚Ì”¼•ª
     //Offsetx,y‚Í0
