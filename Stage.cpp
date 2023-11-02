@@ -183,9 +183,10 @@ void Stage::Update()
         for (int x = 0; x < 15; x++)
         {
             for (int z = 0; z < 15; z++)
+    
             {
-                table_[x][z].height = 0;
-                table_[x][z].type = 0;
+                SetBlock(x, z, DEFAULT);
+                SetBlockHeght(x, z, 0);
             }
         }
         break;
@@ -313,7 +314,7 @@ void Stage::Save()
             string mapType = std::to_string(static_cast<int>(table_[x][z].type)); // ブロックの種類を数値に変換
             mapData += mapHeight + "," + mapType; // 高さと種類をカンマ区切りで追加
             if (x != 14 || z != 14) {  // マップの最後でない場合、カンマを追加
-                mapData += ",";
+                mapData += "　";
             }
         }
     }
